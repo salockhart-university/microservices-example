@@ -5,6 +5,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const http = require('http');
 
+const request = require('../common/request');
+
 let config;
 
 if (process.env.NODE_ENV === "local") {
@@ -43,31 +45,8 @@ app.post('/mun/appraisal', function(req, res) {
 		body[key] = Math.random() > 0.5;
 	})
 
-	const options = {
-		host: config.hostnames.insinc.domain,
-		port: config.hostnames.insinc.port,
-		path: '/insinc/municipal',
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'Content-Length': Buffer.byteLength(JSON.stringify(body))
-		}
-	};
-
-	return new Promise(function(resolve, reject) {
-		const request = http.request(options, function(result) {
-			result.setEncoding('utf8');
-			result.on('data', function(chunk) {
-				if (result.statusCode >= 400) {
-					return reject(chunk);
-				}
-				resolve(JSON.parse(chunk));
-			});
-		});
-
-		request.write(JSON.stringify(body));
-		request.end();
-	});
+	const { domain, port } = config.hostnames.insinc;
+	request.makeRequest(domain, port, '/insinc/municipal', 'POST', body);
 });
 
 app.listen(config.hostnames.mun.port, function() {
