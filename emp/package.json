@@ -1,0 +1,19 @@
+{
+  "name": "emp",
+  "version": "1.0.0",
+  "description": "The Employer microservice for the project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salockhart/CSCI-4145-Project---Team-4.git"
+  },
+  "author": "Nick Broderick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salockhart/CSCI-4145-Project---Team-4/issues"
+  },
+  "homepage": "https://github.com/salockhart/CSCI-4145-Project---Team-4#readme"
+}
