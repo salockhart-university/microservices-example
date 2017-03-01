@@ -43,9 +43,12 @@ app.post('/mun/appraisal', function(req, res) {
 	const body = Object.assign({}, possibleServices);
 	Object.keys(body).forEach(function(key) {
 		body[key] = Math.random() > 0.5;
-	})
+	});
 
-	const { domain, port } = config.hostnames.insinc;
+	const {
+		domain,
+		port
+	} = config.hostnames.insinc;
 	request.makeRequest(domain, port, '/insinc/municipal', 'POST', body);
 });
 
