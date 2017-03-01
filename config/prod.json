@@ -1,0 +1,28 @@
+{
+    "hostnames": {
+        "mun": {
+            "domain": "localhost",
+            "port": "3500"
+        },
+        "re": {
+            "domain": "localhost",
+            "port": "3550"
+        },
+        "insinc": {
+            "domain": "localhost",
+            "port": "53045"
+        },
+        "emp": {
+            "domain": "localhost",
+            "port": "1337"
+        },
+        "log": {
+            "domain": "localhost",
+            "port": "3000"
+        },
+        "mbr": {
+            "domain": "localhost",
+            "port": "3100"
+        }
+    }
+}
