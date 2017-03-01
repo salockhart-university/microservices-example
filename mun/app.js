@@ -25,14 +25,14 @@ app.use(bodyParser.json());
 app.post('/mun/appraisal', function(req, res) {
 	//TODO: Log out that the request to mun was made
 
-	if (!req.body.MlsID) {
+	if (!req.body.mlsID) {
 		//TODO: Log out that the request to mun was completed
-		return res.status(400).send('Bad Request missing body parameter MlsID');
+		return res.status(400).send('Bad Request missing body parameter mlsID');
 	}
 
-	if (!req.body.MortID) {
+	if (!req.body.mortID) {
 		//TODO: Log out that the request to mun was completed
-		return res.status(400).send('Bad Request missing body parameter MortID');
+		return res.status(400).send('Bad Request missing body parameter mortID');
 	}
 
 	//TODO: Log out that the request to mun was completed
