@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSCI 4145 - Project Part 1 - Real Estate Broker</title>
+
+    <link rel="stylesheet" href="index.css">
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <h1>Real Estate Broker</h1>
+
+    <div class="container">
+
+        Apply for Appraisal:
+        <form id="re-apply-form">
+            <input name="mlsID" type="text" placeholder="MLS ID" required><br>
+            <input name="mortID" type="text" placeholder="Mortgage ID" required><br>
+            <input name="name" type="text" placeholder="Name" required><br>
+            <input type="submit">
+        </form>
+
+        <div class="success" id="re-apply-success"></div>
+
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
