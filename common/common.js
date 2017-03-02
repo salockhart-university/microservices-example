@@ -1,15 +1,14 @@
+var http = require('http');
+
+let config;
+
+if (process.env.NODE_ENV === "local") {
+  config = require('../config/local.json');
+} else {
+  config = require('../config/prod.json');
+}
+
 module.exports = {
-
-  var http = require('http');
-
-  let config;
-
-  if (process.env.NODE_ENV === "local") {
-    config = require('../config/local.json');
-  } else {
-    config = require('../config/prod.json');
-  }
-
   logInfo: function(service, endpoint, request, response_status, response_body) {
     var body = {
       service: service,
