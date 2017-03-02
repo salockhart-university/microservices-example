@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === "local") {
 }
 
 var collection;
-//mlab URL
 var dburl = "mongodb://" + process.env.MBR_USER + ":" + process.env.MBR_PASSWORD + "@ds113680.mlab.com:13680/mbr_mortgage";
 MongoClient.connect(dburl, function(err, db) {
   if (!err) {
