@@ -1,0 +1,27 @@
+{
+  "name": "mun",
+  "version": "1.0.0",
+  "description": "Municipality Web Service",
+  "main": "app.js",
+  "scripts": {
+    "dev": "NODE_ENV=local nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salockhart/CSCI-4145-Project---Team-4.git"
+  },
+  "author": "Alex Lockhart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salockhart/CSCI-4145-Project---Team-4/issues"
+  },
+  "homepage": "https://github.com/salockhart/CSCI-4145-Project---Team-4#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
