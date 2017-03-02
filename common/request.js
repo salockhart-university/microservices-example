@@ -23,7 +23,11 @@ module.exports = {
 					if (result.statusCode >= 400) {
 						return reject(chunk);
 					}
-					resolve(JSON.parse(chunk));
+                    try {
+                        resolve(JSON.parse(chunk));
+                    } catch (err) {
+                        resolve(chunk);
+                    }
 				});
 			});
 
