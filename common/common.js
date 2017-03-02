@@ -14,8 +14,8 @@ module.exports = {
       service: service,
       endpoint: endpoint,
       request_body: request.body,
-      user_agent: request.headers['user-agent']
-      response_status: response_status,
+      user_agent: request.headers['user-agent'],
+      response_code: response_status,
       response_body: response_body
     }
 
