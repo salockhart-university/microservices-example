@@ -37,22 +37,21 @@ function makeInsuranceRequest(mlsID, mortID) {
 	// request.makeRequest(domain, port, '/insinc/municipal', 'POST', body);
 }
 
-app.post('/mun/appraisal', function(req, res) {
-	//TODO: Log out that the request to mun was made
-	console.log('request to /mun/appraisal', JSON.stringify(req.body, null, 5));
+function logAndRespond(request, response, endpoint, code, message) {
+	common.logInfo("MUN", endpoint, request, code, message);
+	return response.status(code).send(message);
+}
 
+app.post('/mun/appraisal', function(req, res) {
 	if (!req.body.mlsID) {
-		//TODO: Log out that the request to mun was completed
-		return res.status(400).send('Bad Request missing body parameter mlsID');
+		return logAndRespond(req, res, '/mun/appraisal', 400, 'Bad Request missing body parameter mlsID');
 	}
 
 	if (!req.body.mortID) {
-		//TODO: Log out that the request to mun was completed
-		return res.status(400).send('Bad Request missing body parameter mortID');
+		return logAndRespond(req, res, '/re/appraisal', 400, 'Bad Request missing body parameter mortID');
 	}
 
-	//TODO: Log out that the request to mun was completed
-	res.sendStatus(200);
+	logAndRespond(req, res, '/mun/appraisal', 200);
 
 	makeInsuranceRequest(req.body.mlsID, req.body.mortID);
 });

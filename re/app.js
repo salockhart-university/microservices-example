@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 
 const request = require('../common/request');
+const common = require('../common/common');
 
 let config;
 
@@ -46,27 +47,25 @@ function makeInsuranceRequest(mlsID, mortID) {
 	// request.makeRequest(domain, port, '/insinc/realestate', 'POST', body);
 }
 
-app.post('/re/appraisal', function(req, res) {
-	//TODO: Log out that the request to re was made
-	console.log('request to /re/appraisal', JSON.stringify(req.body, null, 5));
+function logAndRespond(request, response, endpoint, code, message) {
+	common.logInfo("RE", endpoint, request, code, message);
+	return response.status(code).send(message);
+}
 
+app.post('/re/appraisal', function(req, res) {
 	if (!req.body.mlsID) {
-		//TODO: Log out that the request to re was completed
-		return res.status(400).send('Bad Request missing body parameter mlsID');
+		return logAndRespond(req, res, '/re/appraisal', 400, 'Bad Request missing body parameter mlsID');
 	}
 
 	if (!req.body.mortID) {
-		//TODO: Log out that the request to re was completed
-		return res.status(400).send('Bad Request missing body parameter mortID');
+		return logAndRespond(req, res, '/re/appraisal', 400, 'Bad Request missing body parameter mortID');
 	}
 
 	if (!req.body.name) {
-		//TODO: Log out that the request to re was completed
-		return res.status(400).send('Bad Request missing body parameter name');
+		return logAndRespond(req, res, '/re/appraisal', 400, 'Bad Request missing body parameter name');
 	}
 
-	//TODO: Log out that the request to re was completed
-	res.sendStatus(200);
+	logAndRespond(req, res, '/re/appraisal', 200);
 
 	makeMunicipalRequest(req.body.mlsID, req.body.mortID);
 
