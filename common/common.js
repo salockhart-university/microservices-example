@@ -30,11 +30,29 @@ module.exports = {
       }
     }
 
-    var request = http.request(options, function(result) {
-      //do things maybe
+    return new Promise(function(resolve, reject) {
+      var request = http.request(options, function(result) {
+        if (result.statusCode < 200 || result.statusCode >= 300) {
+          return reject(new Error('statusCode=' + res.statusCode));
+        }
+        var body = [];
+        result.on('data', function(chunk) {
+          body.push(chunk);
+        });
+        result.on('end', function() {
+          try {
+            body = JSON.parse(Buffer.concat(body).toString());
+          } catch(e) {
+            reject(e);
+          }
+            resolve(body);
+        });
+      });
+      request.on('error', function(error) {
+        reject(error);
+      });
+      request.write(JSON.stringify(body));
+      request.end();
     });
-
-    request.write(JSON.stringify(body));
-    request.end();
   }
 };
