@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient
+var path = require('path');
 const uuidV4 = require('uuid/v4');
 
 var common = require('../common/common');
@@ -27,6 +28,7 @@ MongoClient.connect(dburl, function(err, db) {
 
 var app = express();
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 var logAndRespond = function(request, response, endpoint, code, message) {
 	common.logInfo("MBR", endpoint, request, code, message);

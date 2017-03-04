@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <title>MBR Mortgages | Mortgages Made Easy™</title>
+  </head>
+  <body>
+
+    <h1>MBR Mortgages</h1>
+    <h4 style="margin-top: -10px;">Mortgages Made Easy™</h4>
+
+    <div class='horizontal-rule'/>
+
+    <div id="select-pane">
+      <p><strong>Welcome to MBR!</strong></p>
+      <p>The following actions are available:</p>
+      <button id="new-mortgage-btn">Apply for mortgage</button>
+      <button id="mortgage-status-btn">View application status</button>
+    </div>
+
+    <div id="application-pane" style="display: none">
+      <p>Complete the form below and submit using the 'Apply' button</p>
+
+      <div class="form-group push">
+        <span class='label'>Applicant Name:</span>
+        <input type="text" id='applicant-name' placeholder="Applicant Name">
+      </div>
+      <div class="form-group push">
+        <span class='label'>Mortgage Value:</span>
+        <input type="text" id='applicant-mortgage-value' placeholder="Mortgage Value ($)">
+      </div>
+      <div class="form-group push">
+        <span class='label'>Property MlsID:</span>
+        <input type="text" id='applicant-mlsID' placeholder="MlsID">
+      </div>
+
+      <button id="application-submit-btn">Apply</button>
+    </div>
+
+    <div id="results-pane" style="display: none">
+      <p><strong>Application recieved!</strong></p>
+      <p>The mortID for your application is <span id="mortID-preview"></span>, keep this for your records</p>
+    </div>
+
+    <div id="status-pane" style="display: none">
+      <p>Enter your applicaition's mortID below and retrieve the status of your application using the 'Retrieve' button</p>
+
+      <div class="form-group">
+        <span class='label'>mortID:</span>
+        <input type="text" id='applicant-mortID' placeholder="MortID">
+      </div>
+
+      <button id="status-retrieve-btn">Retrieve</button>
+    </div>
+
+
+  </body>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script>
+
+    $(document).ready(function() {
+      $('#new-mortgage-btn').click(function() {
+        $('#select-pane').hide();
+        $('#application-pane').show();
+      });
+
+      $('#mortgage-status-btn').click(function() {
+        $('#select-pane').hide();
+        $('#status-pane').show();
+      });
+
+      $('#application-submit-btn').click(function() {
+        var name = $('#applicant-name').val();
+        var value = $('#applicant-mortgage-value').val();
+        var mlsID = $('#applicant-mlsID').val();
+        if (name == '' || value == '' || mlsID == '') {
+          return;
+        }
+        $.ajax({
+          type: "POST",
+          url: '/mbr/request_mortgage',
+          data: JSON.stringify({
+            'name': name,
+            'mortgage_value': value,
+            'mlsID': mlsID
+          }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data) {
+            if (data.error) {
+              alert(data.error);
+            } else {
+              $('#application-pane').hide();
+              $('#mortID-preview').append('<strong>' + data.mortID + '</strong>');
+              $('#results-pane').show();
+            }
+          },
+          error: function(err) {
+            alert(JSON.stringify(err));
+          }
+        });
+      });
+
+      $('#status-retrieve-btn').click(function() {
+        var mortID = $('#applicant-mortID').val();
+        if (mortID == '') {
+          return;
+        }
+        $.ajax({
+          type: "POST",
+          url: '/mbr/request_status',
+          data: JSON.stringify({
+            'mortID': mortID
+          }),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function(data) {
+            if (data.error) {
+              alert(data.error);
+            } else {
+              alert(JSON.stringify(data));
+            }
+          },
+          error: function(err) {
+            alert(JSON.stringify(err));
+          }
+        });
+
+      });
+
+
+    });
+
+  </script>
+</html>
