@@ -43,7 +43,7 @@
     </div>
 
     <div id="status-pane"  class="pane" style="display: none">
-      <p>Enter your applicaition's mortID below and retrieve the status of your application using the 'Retrieve' button</p>
+      <p>Enter your application's mortID below and retrieve the status of your application using the 'Retrieve' button</p>
 
       <div class="form-group">
         <span class='label'>mortID:</span>
@@ -90,7 +90,7 @@
         var name = $('#applicant-name').val();
         var value = $('#applicant-mortgage-value').val();
         var mlsID = $('#applicant-mlsID').val();
-        if (name == '' || value == '' || mlsID == '') {
+        if (name == '' || name == undefined || value == '' || value == undefined || mlsID == '' || mlsID == undefined) {
           return;
         }
         $.ajax({
@@ -120,7 +120,7 @@
 
       $('#status-retrieve-btn').click(function() {
         var mortID = $('#applicant-mortID').val();
-        if (mortID == '') {
+        if (mortID == '' || mortID == undefined) {
           return;
         }
         $.ajax({
