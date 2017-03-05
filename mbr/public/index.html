@@ -10,14 +10,14 @@
 
     <div class='horizontal-rule'/>
 
-    <div id="select-pane">
+    <div id="select-pane" class="pane">
       <p><strong>Welcome to MBR!</strong></p>
       <p>The following actions are available:</p>
       <button id="new-mortgage-btn">Apply for mortgage</button>
       <button id="mortgage-status-btn">View application status</button>
     </div>
 
-    <div id="application-pane" style="display: none">
+    <div id="application-pane"  class="pane" style="display: none">
       <p>Complete the form below and submit using the 'Apply' button</p>
 
       <div class="form-group push">
@@ -36,12 +36,13 @@
       <button id="application-submit-btn">Apply</button>
     </div>
 
-    <div id="results-pane" style="display: none">
+    <div id="application-results-pane"  class="pane" style="display: none">
       <p><strong>Application recieved!</strong></p>
       <p>The mortID for your application is <span id="mortID-preview"></span>, keep this for your records</p>
+      <button class='go-home-btn'>Return to Home Page</button>
     </div>
 
-    <div id="status-pane" style="display: none">
+    <div id="status-pane"  class="pane" style="display: none">
       <p>Enter your applicaition's mortID below and retrieve the status of your application using the 'Retrieve' button</p>
 
       <div class="form-group">
@@ -50,6 +51,17 @@
       </div>
 
       <button id="status-retrieve-btn">Retrieve</button>
+    </div>
+
+    <div id="status-results-pane" class="pane" style="display: none">
+      <p>The information on file for application with mortID <span id="mortID-status"></span> is listed below</p>
+
+      <div id='application-review-div'>
+
+      </div>
+
+      <button class='go-home-btn'>Return to Home Page</button>
+
     </div>
 
 
@@ -67,6 +79,11 @@
       $('#mortgage-status-btn').click(function() {
         $('#select-pane').hide();
         $('#status-pane').show();
+      });
+
+      $('.go-home-btn').click(function() {
+        $('.pane:visible').hide();
+        $('#select-pane').show();
       });
 
       $('#application-submit-btn').click(function() {
@@ -92,7 +109,7 @@
             } else {
               $('#application-pane').hide();
               $('#mortID-preview').append('<strong>' + data.mortID + '</strong>');
-              $('#results-pane').show();
+              $('#application-results-pane').show();
             }
           },
           error: function(err) {
@@ -118,7 +135,29 @@
             if (data.error) {
               alert(data.error);
             } else {
-              alert(JSON.stringify(data));
+              $('#status-pane').hide();
+              $('#status-results-pane').show();
+              $('#mortID-status').append('<strong>' + data.mortID + '</strong>');
+              $('#application-review-div').empty();
+              for (key in data) {
+                const formattedKey = key.replace('_',' ').replace('-',' ');
+                if (key == '_id' || key == 'mortID') {}
+                else if (key == 'employer_info' || key == 'insurance_quote') {
+                  $('#application-review-div').append('<div class="info-well-title">' + formattedKey + ': </div>');
+                  $('#application-review-div').append('<div class="info-well info-well-' + key + '">');
+                  if (data[key].length == undefined || data[key].length == 0) {
+                    $('#application-review-div .info-well-' + key).append('<p>No information on file</p>');
+                  } else {
+                    for (key2 in data[key]) {
+                      const formattedKey2 = key2.replace('_',' ').replace('-',' ');
+                      $('#application-review-div .info-well-' + key).append('<p class="capitalize"><strong>' + formattedKey2 + ': </strong>' + data[key][key2] + '</p>');
+                    }
+                  }
+                  $('#application-review-div').append('</div>');
+                } else {
+                  $('#application-review-div').append('<p class="capitalize"><strong>' + formattedKey + ': </strong>' + data[key] + '</p>');
+                }
+              }
             }
           },
           error: function(err) {

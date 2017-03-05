@@ -7,7 +7,9 @@ html {
 }
 
 body {
-  width: 600px;
+  width: 100%;
+  max-width: 800px;
+  min-height: 100vh;
   margin: auto;
   background-color: white;
   padding: 50px 30px;
@@ -60,14 +62,19 @@ body {
 
 .info-well {
   background-color: rgba(0,0,0,0.10);
-  border: 1px solid #2a2a2a;
   padding: 10px 30px;
   border-radius: 10px;
+  max-width: 100%;
 }
 
 .info-well-title {
  margin: 20px 0px;
- font-weight: bold
+ font-weight: bold;
+ text-transform:capitalize;
+}
+
+.capitalize {
+  text-transform:capitalize;
 }
 
 button {
