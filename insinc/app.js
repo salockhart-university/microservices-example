@@ -4,7 +4,8 @@ var bodyParser = require("body-parser");
 var assert = require("assert");
 var mongo = require("mongodb").MongoClient;
 var restClient = require("node-rest-client").Client;
-var dbUrl = "mongodb://localhost:27017/4145p1";
+var dbUrl = "mongodb://" + process.env.INSINC_USER + ":"
+  + process.env.INSINC_PASSWORD + "@ds119250.mlab.com:19250/insincdb";
 var reCollection, munCollection;
 app.use(bodyParser.json());
 let config;
