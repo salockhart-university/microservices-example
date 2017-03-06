@@ -14,6 +14,7 @@ if (process.env.NODE_ENV === "local") {
 } else {
 	config = require('../config/prod.json');
 }
+const common = require('../common/common');
 
 //accept info from RE
 app.post("/insinc/realestate", function(req, res){
@@ -21,7 +22,7 @@ app.post("/insinc/realestate", function(req, res){
   if(req.body.mortID == null||
      req.body.mlsID == null||
      req.body.appraiseValue == null){
-    log("/insinc/realestate", req.headers['user-agent'], req.body, 400, "Bad Request");
+    log(req, res, "/insinc/realestate", 400, "Bad Request");
     res.sendStatus(400);
   }
   else{
@@ -49,7 +50,7 @@ app.post("/insinc/realestate", function(req, res){
       }
     });
 
-    log("/insinc/realestate", req.headers['user-agent'], req.body, 200, "OK");
+    log(req, res, "/insinc/realestate", 200, "OK");
     res.sendStatus(200);
   }
 });
@@ -60,7 +61,7 @@ app.post("/insinc/municipal", function(req, res){
   if(req.body.mortID == null||
      req.body.mlsID == null||
      req.body.services == null){
-    log("/insinc/municipal", req.headers['user-agent'], req.body, 400, "Bad Request");
+    log(req, res, "/insinc/municipal", 400, "Bad Request");
     res.sendStatus(400);
   }
   else{
@@ -87,7 +88,7 @@ app.post("/insinc/municipal", function(req, res){
       }
     });
 
-    log("/insinc/municipal", req.headers['user-agent'], req.body, 200, "OK");
+    log(req, res, "/insinc/municipal", 200, "OK");
     res.sendStatus(200);
   }
 });
@@ -114,26 +115,9 @@ function submitQuote(mlsID, name){
 }
 
 //send log info to logger
-function log(endpoint, user_agent, request_body, request_code, response_body){
-  const{
-    domain,
-    port
-  } = config.hostnames.log;
-  var logUrl = domain+":"+port+"/logger/log";
-  var client = new restClient();
-  var payload = {
-    service : "INSinc",
-    endpoint : endpoint,
-    user_agent : user_agent,
-    request_body : request_body,
-    request_code : request_code,
-    response_body : response_body
-  }
-  var args = {
-    headers: {"content-type": "application/json"},
-    data: JSON.stringify(payload)
-  };
-  client.post(logUrl, args);
+function log(request, response, endpoint, code, message) {
+	common.logInfo("INSinc", endpoint, request, code, message);
+	return response.status(code).send(message);
 }
 
 mongo.connect(dbUrl, function(err, db){
