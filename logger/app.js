@@ -38,7 +38,9 @@ app.post("/logger/log", function(request, response) {
       }
     );
   } else {
-		console.log(JSON.stringify(request.body));
+	  log.error({
+      body: request.body
+    }, 'Bad Request, missing required parameter.');
     response.status(400).send('Bad Request, missing required parameter.');
   }
 });

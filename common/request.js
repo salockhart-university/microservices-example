@@ -12,7 +12,8 @@ module.exports = {
 			method,
 			headers: Object.assign({}, headers, {
 				'Content-Type': 'application/json',
-				'Content-Length': Buffer.byteLength(JSON.stringify(body))
+				'Content-Length': Buffer.byteLength(JSON.stringify(body)),
+                'user-agent': 'microservice'
 			})
 		};
 

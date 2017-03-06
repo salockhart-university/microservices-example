@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const http = require('http');
 
 const request = require('../common/request');
+const common = require('../common/common');
 
 let config;
 
@@ -49,7 +50,7 @@ app.post('/mun/appraisal', function(req, res) {
 		return logAndRespond(req, res, '/re/appraisal', 400, 'Bad Request missing body parameter mortID');
 	}
 
-	logAndRespond(req, res, '/mun/appraisal', 200);
+	logAndRespond(req, res, '/mun/appraisal', 200, 'OK');
 
 	makeInsuranceRequest(req.body.mlsID, req.body.mortID);
 });
