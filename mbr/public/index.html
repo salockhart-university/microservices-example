@@ -108,6 +108,7 @@
               alert(data.error);
             } else {
               $('#application-pane').hide();
+              $('#mortID-preview').empty();
               $('#mortID-preview').append('<strong>' + data.mortID + '</strong>');
               $('#application-results-pane').show();
             }
@@ -137,6 +138,7 @@
             } else {
               $('#status-pane').hide();
               $('#status-results-pane').show();
+              $('#mortID-status').empty();
               $('#mortID-status').append('<strong>' + data.mortID + '</strong>');
               $('#application-review-div').empty();
               for (key in data) {
