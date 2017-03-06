@@ -16,12 +16,12 @@ if (process.env.NODE_ENV === "local") {
 }
 
 //accept info from RE
-app.post("/realestate", function(req, res){
+app.post("/insinc/realestate", function(req, res){
   //add realestate info to db
   if(req.body.mortID == null||
      req.body.mlsID == null||
      req.body.appraiseValue == null){
-    log("/realestate", req.headers['user-agent'], req.body, 400, "Bad Request");
+    log("/insinc/realestate", req.headers['user-agent'], req.body, 400, "Bad Request");
     res.sendStatus(400);
   }
   else{
@@ -49,18 +49,18 @@ app.post("/realestate", function(req, res){
       }
     });
 
-    log("/realestate", req.headers['user-agent'], req.body, 200, "OK");
+    log("/insinc/realestate", req.headers['user-agent'], req.body, 200, "OK");
     res.sendStatus(200);
   }
 });
 
 //accept info from MUN
-app.post("/municipal", function(req, res){
+app.post("/insinc/municipal", function(req, res){
   //add municipal info to db
   if(req.body.mortID == null||
      req.body.mlsID == null||
      req.body.services == null){
-    log("/municipal", req.headers['user-agent'], req.body, 400, "Bad Request");
+    log("/insinc/municipal", req.headers['user-agent'], req.body, 400, "Bad Request");
     res.sendStatus(400);
   }
   else{
@@ -87,7 +87,7 @@ app.post("/municipal", function(req, res){
       }
     });
 
-    log("/municipal", req.headers['user-agent'], req.body, 200, "OK");
+    log("/insinc/municipal", req.headers['user-agent'], req.body, 200, "OK");
     res.sendStatus(200);
   }
 });
@@ -148,28 +148,28 @@ app.listen(config.hostnames.insinc.port, function(){
 });
 
 //testing functions
-app.get("/relist", function(req, res){
+app.get("/insinc/relist", function(req, res){
   reCollection.find({}).toArray(function(err, result){
     assert.equal(err, null);
     res.send(result);
   });
 });
 
-app.get("/munlist", function(req, res){
+app.get("/insinc/munlist", function(req, res){
   munCollection.find({}).toArray(function(err, result){
     assert.equal(err, null);
     res.send(result);
   });
 });
 
-app.delete("/redelete", function(req, res){
+app.delete("/insinc/redelete", function(req, res){
   reCollection.remove({}, function(err, result){
     assert.equal(err, null);
     res.send(result);
   });
 });
 
-app.delete("/mundelete", function(req, res){
+app.delete("/insinc/mundelete", function(req, res){
   munCollection.remove({}, function(err, result){
     assert.equal(err, null);
     res.send(result);
