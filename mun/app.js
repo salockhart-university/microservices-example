@@ -32,9 +32,7 @@ function makeInsuranceRequest(mlsID, mortID) {
 		domain,
 		port
 	} = config.hostnames.insinc;
-	//TODO wire up to insinc once completed
-	console.log('request to /insinc/municipal', JSON.stringify(body, null, 5));
-	// request.makeRequest(domain, port, '/insinc/municipal', 'POST', body);
+	request.makeRequest(domain, port, '/insinc/municipal', 'POST', body);
 }
 
 function logAndRespond(request, response, endpoint, code, message) {

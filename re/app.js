@@ -43,9 +43,7 @@ function makeInsuranceRequest(mlsID, mortID, name) {
 		domain,
 		port
 	} = config.hostnames.insinc;
-	//TODO wire up to insinc once completed
-	console.log('request to /insinc/realestate', JSON.stringify(body, null, 5));
-	// request.makeRequest(domain, port, '/insinc/realestate', 'POST', body);
+	request.makeRequest(domain, port, '/insinc/realestate', 'POST', body);
 }
 
 function logAndRespond(request, response, endpoint, code, message) {
