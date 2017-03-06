@@ -6,7 +6,7 @@
                             : require('../config/local.json').hostnames.emp;
 
   const express = require('express');
-  const path = require('path')
+  const path = require('path');
   const http = require('http');
   const dbConn = require('./dbConn.js');
 
@@ -15,6 +15,7 @@
   setupMiddleware(app);
   setAppSecret(app);
   injectAuthoirzationTokenParser(app);
+  setViewPath(app);
 
   http.createServer(app).listen(config.port);
 
@@ -52,6 +53,13 @@
         next();
       }
     });
+  }
+
+  function setViewPath(app) {
+    const viewPath = path.join(__dirname, 'views');
+
+    app.set('view engine', 'ejs');
+    app.set('views', viewPath);
   }
 
 })();
