@@ -41,3 +41,6 @@ jspm_packages
 # Scripts
 run.sh
 stop.sh
+
+# IDE-specific files
+.jshintrc
