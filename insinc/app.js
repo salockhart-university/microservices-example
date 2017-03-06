@@ -81,7 +81,7 @@ app.post("/insinc/municipal", function(req, res){
     }).toArray(function(err, result){
       assert.equal(err, null);
       if(result.length > 0){
-        submitQuote(req.body.mlsID, result.name);
+        submitQuote(req.body.mlsID, result[0].name);
       }
     });
 
