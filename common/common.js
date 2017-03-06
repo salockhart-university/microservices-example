@@ -33,7 +33,7 @@ module.exports = {
     return new Promise(function(resolve, reject) {
       var request = http.request(options, function(result) {
         if (result.statusCode < 200 || result.statusCode >= 300) {
-          return reject(new Error('statusCode=' + res.statusCode));
+          return reject(new Error('statusCode=' + result.statusCode));
         }
         var body = [];
         result.on('data', function(chunk) {
