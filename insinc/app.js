@@ -28,7 +28,8 @@ app.post("/realestate", function(req, res){
         reCollection.insert({
           mortID : req.body.mortID,
           mlsID : req.body.mlsID,
-          appraiseValue : req.body.appraiseValue
+          appraiseValue : req.body.appraiseValue,
+          name : req.body.name
         });
       }
     });
@@ -39,7 +40,7 @@ app.post("/realestate", function(req, res){
     }).toArray(function(err, result){
       assert.equal(err, null);
       if(result.length > 0){
-        submitQuote(req.body.mlsID);
+        submitQuote(req.body.mlsID, req.body.name);
       }
     });
 
@@ -77,7 +78,7 @@ app.post("/municipal", function(req, res){
     }).toArray(function(err, result){
       assert.equal(err, null);
       if(result.length > 0){
-        submitQuote(req.body.mlsID);
+        submitQuote(req.body.mlsID, result.name);
       }
     });
 
@@ -87,13 +88,13 @@ app.post("/municipal", function(req, res){
 });
 
 //send quote to MBR
-function submitQuote(mlsID){
+function submitQuote(mlsID, name){
   var client = new restClient();
-  var payload = { //where are these values supposed to come from?
+  var payload = {
     mlsID : mlsID,
-    insured_value : 0,
-    deductable_value : 0,
-    name : "bob"
+    insured_value : Math.floor(Math.random() * 100),
+    deductable_value : Math.floor(Math.random() * 100),
+    name : name
   };
   var args = {
     headers: {"content-type": "application/json"},
