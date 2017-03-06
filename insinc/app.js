@@ -5,10 +5,14 @@ var assert = require("assert");
 var mongo = require("mongodb").MongoClient;
 var restClient = require("node-rest-client").Client;
 var dbUrl = "mongodb://localhost:27017/4145p1";
-var logUrl = "";  //to do: determine url
-var mbrUrl = ""; //to do: determine url
 var reCollection, munCollection;
 app.use(bodyParser.json());
+let config;
+if (process.env.NODE_ENV === "local") {
+	config = require('../config/local.json');
+} else {
+	config = require('../config/prod.json');
+}
 
 //accept info from RE
 app.post("/realestate", function(req, res){
@@ -100,11 +104,21 @@ function submitQuote(mlsID, name){
     headers: {"content-type": "application/json"},
     data: JSON.stringify(payload)
   };
+  const{
+    domain,
+    port
+  } = config.hostnames.mbr;
+  var mbrUrl = domain+":"+port+"/mbr/submit_insurance_quote";
   client.post(mbrUrl, args);
 }
 
 //send log info to logger
 function log(endpoint, user_agent, request_body, request_code, response_body){
+  const{
+    domain,
+    port
+  } = config.hostnames.log;
+  var logUrl = domain+":"+port+"/logger/log";
   var client = new restClient();
   var payload = {
     service : "INSinc",
