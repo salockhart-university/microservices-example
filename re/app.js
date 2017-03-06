@@ -32,10 +32,11 @@ function makeMunicipalRequest(mlsID, mortID) {
 	return request.makeRequest(domain, port, '/mun/appraisal', 'POST', body);
 }
 
-function makeInsuranceRequest(mlsID, mortID) {
+function makeInsuranceRequest(mlsID, mortID, name) {
 	const body = {
 		mortID,
 		mlsID,
+		name,
 		appraiseValue: Math.floor(Math.random() * 500000 + 500000)
 	}
 	const {
@@ -69,7 +70,7 @@ app.post('/re/appraisal', function(req, res) {
 
 	makeMunicipalRequest(req.body.mlsID, req.body.mortID);
 
-	makeInsuranceRequest(req.body.mlsID, req.body.mortID);
+	makeInsuranceRequest(req.body.mlsID, req.body.mortID, req.body.name);
 });
 
 app.listen(config.hostnames.re.port, function() {
