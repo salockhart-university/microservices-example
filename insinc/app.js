@@ -1,13 +1,13 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+app.use(bodyParser.json());
 var assert = require("assert");
 var mongo = require("mongodb").MongoClient;
 var restClient = require("node-rest-client").Client;
 var dbUrl = "mongodb://" + process.env.INSINC_USER + ":"
   + process.env.INSINC_PASSWORD + "@ds119250.mlab.com:19250/insincdb";
 var reCollection, munCollection;
-app.use(bodyParser.json());
 let config;
 if (process.env.NODE_ENV === "local") {
 	config = require('../config/local.json');
@@ -16,12 +16,24 @@ if (process.env.NODE_ENV === "local") {
 }
 const common = require('../common/common');
 
+mongo.connect(dbUrl, function(err, db){
+  assert.equal(null, err);
+  console.log("INSINC connected to database");
+  reCollection = db.collection("realestate");
+  munCollection = db.collection("municipal");
+});
+
+app.listen(config.hostnames.insinc.port, function(){
+  console.log(`INSINC listening on port ${config.hostnames.insinc.port}`);
+});
+
 //accept info from RE
 app.post("/insinc/realestate", function(req, res){
   //add realestate info to db
-  if(req.body.mortID == null||
-     req.body.mlsID == null||
-     req.body.appraiseValue == null){
+  if( req.body.mortID == null||
+      req.body.mlsID == null||
+      req.body.appraiseValue == null||
+      req.body.name == null){
     log(req, res, "/insinc/realestate", 400, "Bad Request");
   }
   else{
@@ -106,8 +118,15 @@ function submitQuote(mlsID, name){
     domain,
     port
   } = config.hostnames.mbr;
-  var mbrUrl = domain+":"+port+"/mbr/submit_insurance_quote";
-  client.post(mbrUrl, args);
+  var mbrUrl = "http://" + domain + ":"
+    + port + "/mbr/submit_insurance_quote";
+  var req = client.post(mbrUrl, args, function(data, response){
+  });
+
+  //for testing
+  req.on("error", function(err){
+    console.log(err);
+  });
 }
 
 //send log info to logger
@@ -115,17 +134,6 @@ function log(request, response, endpoint, code, message) {
 	common.logInfo("INSinc", endpoint, request, code, message);
 	return response.status(code).send(message);
 }
-
-mongo.connect(dbUrl, function(err, db){
-  assert.equal(null, err);
-  console.log("INSINC connected to database");
-  reCollection = db.collection("realestate");
-  munCollection = db.collection("municipal");
-});
-
-app.listen(config.hostnames.insinc.port, function(){
-  console.log(`INSINC listening on port ${config.hostnames.insinc.port}`);
-});
 
 //testing functions
 app.get("/insinc/relist", function(req, res){
