@@ -64,7 +64,7 @@ app.post('/re/appraisal', function(req, res) {
 		return logAndRespond(req, res, '/re/appraisal', 400, 'Bad Request missing body parameter name');
 	}
 
-	logAndRespond(req, res, '/re/appraisal', 200);
+	logAndRespond(req, res, '/re/appraisal', 200, 'OK');
 
 	makeMunicipalRequest(req.body.mlsID, req.body.mortID);
 
