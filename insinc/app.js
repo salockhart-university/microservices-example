@@ -138,13 +138,13 @@ function log(endpoint, user_agent, request_body, request_code, response_body){
 
 mongo.connect(dbUrl, function(err, db){
   assert.equal(null, err);
-  console.log("Connected to server");
+  console.log("INSINC connected to database");
   reCollection = db.collection("realestate");
   munCollection = db.collection("municipal");
 });
 
-app.listen(53045, function(){
-  console.log("App listening on port 53045");
+app.listen(config.hostnames.insinc.port, function(){
+  console.log(`INSINC listening on port ${config.hostnames.insinc.port}`);
 });
 
 //testing functions

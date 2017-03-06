@@ -44,5 +44,5 @@ app.post("/logger/log", function(request, response) {
 });
 
 app.listen(config.hostnames.log.port, function() {
-  console.log('Logger listening on port ' + config.hostnames.log.port)
+  console.log('LOGGER listening on port ' + config.hostnames.log.port)
 });

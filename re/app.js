@@ -72,5 +72,5 @@ app.post('/re/appraisal', function(req, res) {
 });
 
 app.listen(config.hostnames.re.port, function() {
-	console.log(`Listening on port ${config.hostnames.re.port}!`);
+	console.log(`RE listening on port ${config.hostnames.re.port}`);
 });

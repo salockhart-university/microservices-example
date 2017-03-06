@@ -18,7 +18,7 @@ var collection;
 var dburl = "mongodb://" + process.env.MBR_USER + ":" + process.env.MBR_PASSWORD + "@ds113680.mlab.com:13680/mbr_mortgage";
 MongoClient.connect(dburl, function(err, db) {
   if (!err) {
-    console.log("Connected successfully to database");
+    console.log("MBR connected to database");
     collection = db.collection('mortgages');
   } else {
 		console.log("Unable to connect to mlab, Ensure mlab URL and credentials are correct. Exiting...");

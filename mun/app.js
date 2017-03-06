@@ -55,5 +55,5 @@ app.post('/mun/appraisal', function(req, res) {
 });
 
 app.listen(config.hostnames.mun.port, function() {
-	console.log(`Listening on port ${config.hostnames.mun.port}!`);
+	console.log(`MUN listening on port ${config.hostnames.mun.port}`);
 });
