@@ -27,7 +27,6 @@ app.use(bodyParser.json());
 app.post("/logger/log", function(request, response) {
   let fields = ['service', 'endpoint', 'user_agent', 'request_body', 'response_code', 'response_body'];
   if (fields.every(function(x) { return x in request.body; })) {
-		console.log("logging");
     log.info(
       {
         'service': request.body.service,
@@ -39,7 +38,6 @@ app.post("/logger/log", function(request, response) {
       }
     );
   } else {
-		console.log("bad log request");
 		console.log(JSON.stringify(request.body));
     response.status(400).send('Bad Request, missing required parameter.');
   }
