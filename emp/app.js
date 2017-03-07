@@ -26,12 +26,12 @@
   function setupMiddleware(app) {
     const bodyParser = require('body-parser');
     const cookieParser = require('cookie-parser');
-    const STATIC_DIR = 'public';
+    const staticDir = 'public';
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.use(express.static(STATIC_DIR));
+    app.use(express.static(staticDir));
   }
 
   function setAppSecret(app) {
@@ -45,8 +45,7 @@
     const jwt = require('jsonwebtoken');
 
     app.use(function (req, res, next) {
-      const tokenName = 'CSCI4145_EMP_ACCESS_TOKEN';
-      const token = req.cookies[tokenName];
+      const token = req.cookies[config.accessTokenName];
       if (token) {
         jwt.verify(token, app.get('secret'), function (err, decoded) {
           if (!err) {
@@ -79,7 +78,7 @@
     app.use(secureRouteBarrier);
 
     fs.readdirSync(secureRoutes)
-        .map(file => path.join(routes, file)).forEach(loadRoute);
+        .map(file => path.join(secureRoutes, file)).forEach(loadRoute);
 
     function loadRoute(route) {
       let ext = path.extname(route);
@@ -89,7 +88,7 @@
           routeInit(app, dbConn);
         }
         else {
-          console.log(`Error loading route '${path}`);
+          console.log(`Error loading route '${route}''`);
           process.exit(1);
         }
       }
@@ -100,7 +99,7 @@
         next();
       }
       else {
-        res.render('access-denied');
+        res.redirect('/sign-in');
       }
     }
   }

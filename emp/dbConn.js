@@ -22,7 +22,7 @@
       });
     },
 
-    fetchUser: function (employeeId, password) {
+    fetchUser: function (employeeId) {
       return connectToDb.then(function () {
         // something
       })

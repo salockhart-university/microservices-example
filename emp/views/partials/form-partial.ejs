@@ -7,7 +7,7 @@
       <% field = form[i] %>
       <label><%= field.label + (field.required ? '*' : '')%></label>
       <br>
-      <input type="<%= field.type %>" name="<%= field.name %>" <%= field.required ? "required" : "" %>></input>
+      <input min="<%= field.min %>" type="<%= field.type %>" name="<%= field.name %>" <%= field.required ? "required" : "" %>></input>
       <br>
     </div>
   <% } %>

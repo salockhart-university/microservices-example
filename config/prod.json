@@ -14,7 +14,8 @@
         },
         "emp": {
             "domain": "localhost",
-            "port": "1337"
+            "port": "1337",
+            "accessTokenName": "CSCI4145_EMP_ACCESS_TOKEN"
         },
         "log": {
             "domain": "localhost",
