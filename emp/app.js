@@ -21,13 +21,17 @@
 
   http.createServer(app).listen(config.port);
 
+  /* Utility methods */
+
   function setupMiddleware(app) {
     const bodyParser = require('body-parser');
     const cookieParser = require('cookie-parser');
+    const STATIC_DIR = 'public';
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser());
+    app.use(express.static(STATIC_DIR));
   }
 
   function setAppSecret(app) {
@@ -70,19 +74,17 @@
     const secureRoutes = path.join(__dirname, 'secure-routes');
 
     fs.readdirSync(routes)
-      .map(file => path.join(routes, file))
-      .forEach(loadRoute);
+        .map(file => path.join(routes, file)).forEach(loadRoute);
 
-    injectAuthorizationBarrier(app);
+    app.use(secureRouteBarrier);
 
     fs.readdirSync(secureRoutes)
-      .map(file => path.join(secureRoutes, file))
-      .forEach(loadRoute);
+        .map(file => path.join(routes, file)).forEach(loadRoute);
 
-    function loadRoute(path) {
-      let ext = path.extname(path);
+    function loadRoute(route) {
+      let ext = path.extname(route);
       if (ext === '.js') {
-        const routeInit = require(path);
+        const routeInit = require(route);
         if (typeof routeInit === 'function') {
           routeInit(app, dbConn);
         }
@@ -93,15 +95,13 @@
       }
     }
 
-    function injectAuthorizationBarrier(app) {
-      app.use(function (req, res, next) {
-        if (req.signedInUser) {
-          next();
-        }
-        else {
-          res.render('access-denied');
-        }
-      });
+    function secureRouteBarrier(req, res, next) {
+      if (req.signedInUser) {
+        next();
+      }
+      else {
+        res.render('access-denied');
+      }
     }
   }
 })();

@@ -1,0 +1,19 @@
+<head>
+  <link rel="stylesheet" type="text/css" href="/form-styles.css">
+</head>
+<form method="post" action="<%= action %>">
+  <% for (let i = 0; i < form.length; i++) { %>
+    <div class="form-field">
+      <% field = form[i] %>
+      <label><%= field.label + (field.required ? '*' : '')%></label>
+      <br>
+      <input type="<%= field.type %>" name="<%= field.name %>" <%= field.required ? "required" : "" %>></input>
+      <br>
+    </div>
+  <% } %>
+  <div class="form-button">
+    <input disabled type="submit" value="<%= buttonText %>"></input>
+  </div>
+</form>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+<script type="text/javascript" src="/validate-form.js"></script>
