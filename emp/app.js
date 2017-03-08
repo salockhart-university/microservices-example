@@ -61,7 +61,6 @@
 
   function setViewPath(app) {
     const viewPath = path.join(__dirname, 'views');
-
     app.set('view engine', 'ejs');
     app.set('views', viewPath);
   }
@@ -87,7 +86,7 @@
           routeInit(app, dbConn);
         }
         else {
-          console.log(`Error loading route '${route}''`);
+          console.log(`Error loading route '${route}'`);
           process.exit(1);
         }
       }

@@ -8,7 +8,6 @@
       dbConn.fetchEmployee(employeeId)
         .bind({})
         .then(function (userObj) {
-          console.log(userObj);
           this.userObj = userObj;
           const bcrypt = require('bcrypt');
           const passwordHash = userObj.passwordHash;

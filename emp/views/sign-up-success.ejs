@@ -1,0 +1,8 @@
+<html>
+  <body>
+    <h1>Sign Up Success</h1>
+    <p>Welcome, <%= employeeInfo.firstName %>!</p>
+    <p>Your employeeId is <b><%= employeeInfo.employeeId %><b></p>
+    <%- include('partials/nav-button.ejs', { action: '/transfer-information', buttonText: 'Transfer Information' })%>
+  </body>
+</html>

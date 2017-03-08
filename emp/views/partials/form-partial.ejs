@@ -6,7 +6,7 @@
     <div class="form-field">
       <% field = form[i] %>
       <% if (field.label) { %>
-        <label><%= field.label + (field.attrs.required ? '*' : '')%></label>
+        <label><%= field.label + (field.required ? '*' : '')%></label>
         <br>
       <% } %>
       <input min="<%= field.min %>" type="<%= field.type %>" name="<%= field.name %>" <%= field.required ? "required" : "" %>></input>

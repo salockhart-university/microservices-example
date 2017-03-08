@@ -12,15 +12,12 @@
     const signInLocals = {
       action: '/sign-in',
       form: signInForm,
-      buttonText: 'Sign In'
+      buttonText: 'Sign In',
+      errorMessage: null
     };
 
     app.get('/sign-in', function (req, res) {
-      res.render('sign-in', {
-        action: '/sign-in',
-        form: signInForm,
-        buttonText: 'Sign In'
-      });
+      res.render('sign-in', signInLocals);
     });
 
     app.post('/sign-in', function (req, res) {
@@ -31,13 +28,11 @@
       requestEmpAuth(host, employeeId, password)
         .then(function (authRes) {
           if (authRes.success) {
-            setAccessCookie(authRes, res, secure);
-            res.render('transfer-information', { username: req.body.username });
+            setAccessCookie(authRes.token, res, secure);
+            res.redirect('/transfer-information');
           }
           else {
-            res.render('sign-in',
-                Object.assign(signInLocals,
-                             { errorMessage: 'Sign-in failed' }));
+            res.render('sign-in', signInLocals);
           }
       });
     });

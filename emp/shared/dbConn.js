@@ -36,6 +36,9 @@
             userObj.passwordHash = passwordHash;
             delete userObj.password;
             return employeeCollection.insertOne(userObj);
+          })
+          .then(function (result) {
+            return result.ops[0];
           });
       });
     },
