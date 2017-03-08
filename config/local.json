@@ -14,7 +14,9 @@
         },
         "emp": {
             "domain": "localhost",
-            "port": "1337"
+            "port": "1337",
+            "accessTokenName": "CSCI4145_EMP_ACCESS_TOKEN",
+            "mongoDbUrl": "mongodb://broderick:5m3nve0bj2@ds121980.mlab.com:21980/emp-db-csci4145-proj"
         },
         "log": {
             "domain": "localhost",

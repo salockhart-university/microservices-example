@@ -1,14 +1,14 @@
 (function () {
   'use strict';
 
-  const production = process.env.NODE_ENV === 'production'
+  const production = process.env.NODE_ENV === 'production';
   const config = production ? require('../config/production.json').hostnames.emp
                             : require('../config/local.json').hostnames.emp;
 
   const express = require('express');
   const path = require('path');
   const http = require('http');
-  const dbConn = require('./dbConn.js');
+  const dbConn = require('./shared/dbConn.js');
 
   const app = express();
 
@@ -16,16 +16,21 @@
   setAppSecret(app);
   injectAuthoirzationTokenParser(app);
   setViewPath(app);
+  loadRoutes(app, dbConn);
 
   http.createServer(app).listen(config.port);
+
+  /* Utility methods */
 
   function setupMiddleware(app) {
     const bodyParser = require('body-parser');
     const cookieParser = require('cookie-parser');
+    const staticDir = 'public';
 
     app.use(bodyParser.json());
-    app.use(bodyParser.urlEncoded({ extended: true }));
+    app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser());
+    app.use(express.static(staticDir));
   }
 
   function setAppSecret(app) {
@@ -39,8 +44,7 @@
     const jwt = require('jsonwebtoken');
 
     app.use(function (req, res, next) {
-      const tokenName = 'csci4145_emp_access_token';
-      const token = req.cookies[tokenName];
+      const token = req.cookies[config.accessTokenName];
       if (token) {
         jwt.verify(token, app.get('secret'), function (err, decoded) {
           if (!err) {
@@ -62,4 +66,40 @@
     app.set('views', viewPath);
   }
 
+  function loadRoutes(app, dbConn) {
+    const fs = require('fs');
+    const routes = path.join(__dirname, 'routes');
+    const secureRoutes = path.join(__dirname, 'secure-routes');
+
+    fs.readdirSync(routes)
+        .map(file => path.join(routes, file)).forEach(loadRoute);
+
+    app.use(secureRouteBarrier);
+
+    fs.readdirSync(secureRoutes)
+        .map(file => path.join(secureRoutes, file)).forEach(loadRoute);
+
+    function loadRoute(route) {
+      let ext = path.extname(route);
+      if (ext === '.js') {
+        const routeInit = require(route);
+        if (typeof routeInit === 'function') {
+          routeInit(app, dbConn);
+        }
+        else {
+          console.log(`Error loading route '${route}''`);
+          process.exit(1);
+        }
+      }
+    }
+
+    function secureRouteBarrier(req, res, next) {
+      if (req.signedInUser) {
+        next();
+      }
+      else {
+        res.redirect('/sign-in');
+      }
+    }
+  }
 })();
