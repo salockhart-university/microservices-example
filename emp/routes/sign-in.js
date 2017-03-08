@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+  const requestEmpAuth = require('../shared/requestEmpAuth.js');
   const makeRequest = require('../../common/request.js').makeRequest;
   const production = process.env.NODE_ENV === 'production';
   const config = production ?
@@ -8,6 +9,12 @@
     : require('../../config/local.json').hostnames.emp;
 
   module.exports = function createSignInRoute(app) {
+    const signInLocals = {
+      action: '/sign-in',
+      form: signInForm,
+      buttonText: 'Sign In'
+    };
+
     app.get('/sign-in', function (req, res) {
       res.render('sign-in', {
         action: '/sign-in',
@@ -21,14 +28,16 @@
       const secure = req.secure;
       const { employeeId, password } = req.body;
 
-      requestEmpAuthorization(host, employeeId, password)
+      requestEmpAuth(host, employeeId, password)
         .then(function (authRes) {
           if (authRes.success) {
             setAccessCookie(authRes, res, secure);
-            res.render('home', { username: req.body.username });
+            res.render('transfer-information', { username: req.body.username });
           }
           else {
-            res.render('sign-in');
+            res.render('sign-in',
+                Object.assign(signInLocals,
+                             { errorMessage: 'Sign-in failed' }));
           }
       });
     });
@@ -37,7 +46,7 @@
   const signInForm = [
     {
       type: 'text',
-      name: 'employee_id',
+      name: 'employeeId',
       label: 'Employee ID',
       required: true
     },
@@ -50,7 +59,7 @@
   ];
 
   function requestEmpAuthorization(host, employeeId, password) {
-    const port  = config.port;
+    const port = config.port;
     const path = '/auth';
     const method = 'post';
     const body = { employeeId, password };

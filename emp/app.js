@@ -8,8 +8,7 @@
   const express = require('express');
   const path = require('path');
   const http = require('http');
-  // const dbConn = require('./dbConn.js');
-  const dbConn = {};
+  const dbConn = require('./shared/dbConn.js');
 
   const app = express();
 

@@ -5,9 +5,10 @@
     app.post('/auth', function (req, res) {
       const { employeeId, password } = req.body;
 
-      dbConn.fetchUser(employeeId)
+      dbConn.fetchEmployee(employeeId)
         .bind({})
         .then(function (userObj) {
+          console.log(userObj);
           this.userObj = userObj;
           const bcrypt = require('bcrypt');
           const passwordHash = userObj.passwordHash;
@@ -20,11 +21,7 @@
             const token = jwt.sign(this.userObj, app.get('secret'), {
               expiresIn
             });
-            res.json({
-              success: true,
-              token,
-              expiresIn
-            });
+            res.json({ success: true, token, expiresIn });
           }
           else {
             return Promise.reject();

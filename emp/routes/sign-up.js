@@ -4,7 +4,7 @@
   module.exports = function (app) {
     app.get('/sign-up', function (req, res) {
       res.render('sign-up', {
-        action: '/register-user',
+        action: '/register-employee',
         form: signUpForm,
         buttonText: 'Register'
       });
@@ -14,13 +14,13 @@
   const signUpForm = [
     {
       type: 'text',
-      name: 'first_name',
+      name: 'firstName',
       label: 'First Name',
       required: true
     },
     {
       type: 'text',
-      name: 'last_name',
+      name: 'lastName',
       label: 'Last Name',
       required: true
     },
@@ -33,7 +33,7 @@
     },
     {
       type: 'date',
-      name: 'start_date',
+      name: 'startDate',
       label: 'Start Date',
       required: true
     },

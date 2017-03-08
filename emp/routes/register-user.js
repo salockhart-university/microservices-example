@@ -1,17 +1,14 @@
 (function () {
   'use strict';
 
-  module.exports = function createRegisterUserRoute(app, dbConn) {
-    app.post('/register-user', function (req, res, next) {
-      console.log(req.body);
-      res.redirect('/home');
-
-      // dbConn.registerUser(req.body).then(function () {
-      //   // probably login on success, then redirect to home
-      // })
-      // .catch(function () {
-      //   // redirect to some error page
-      // });
+  module.exports = function createRegisterEmployeeRoute(app, dbConn) {
+    app.post('/register-employee', function (req, res) {
+      dbConn.registerEmployee(req.body).then(function (newUser) {
+        console.log('hi');
+      })
+      .catch(function (err) {
+        console.log('err');
+      });
     });
   };
 })();

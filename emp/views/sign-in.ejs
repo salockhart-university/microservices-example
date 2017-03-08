@@ -2,5 +2,8 @@
   <body>
     <h1>EMP Sign In</h1>
     <%- include('partials/form-partial.ejs', { action, form, buttonText }) %>
+    <% if (this.errorMessage) { %>
+      <p><%= errorMessage %><p>
+    <% } %>
   </body>
 </html>
