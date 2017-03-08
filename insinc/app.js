@@ -4,7 +4,6 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 var assert = require("assert");
 var mongo = require("mongodb").MongoClient;
-var restClient = require("node-rest-client").Client;
 var dbUrl = "mongodb://" + process.env.INSINC_USER + ":"
   + process.env.INSINC_PASSWORD + "@ds119250.mlab.com:19250/insincdb";
 var reCollection, munCollection;
@@ -15,6 +14,7 @@ if (process.env.NODE_ENV === "local") {
 	config = require('../config/prod.json');
 }
 const common = require('../common/common');
+const request = require('../common/request');
 
 mongo.connect(dbUrl, function(err, db){
   assert.equal(null, err);
@@ -103,30 +103,17 @@ app.post("/insinc/municipal", function(req, res){
 
 //send quote to MBR
 function submitQuote(mlsID, name){
-  var client = new restClient();
-  var payload = {
-    mlsID : mlsID,
+  const body = {
+    mlsID,
     insured_value : Math.floor(Math.random() * 100),
-    deductable_value : Math.floor(Math.random() * 100),
-    name : name
-  };
-  var args = {
-    headers: {"content-type": "application/json"},
-    data: JSON.stringify(payload)
+    deductible_value : Math.floor(Math.random() * 100),
+    name
   };
   const{
     domain,
     port
   } = config.hostnames.mbr;
-  var mbrUrl = "http://" + domain + ":"
-    + port + "/mbr/submit_insurance_quote";
-  var req = client.post(mbrUrl, args, function(data, response){
-  });
-
-  //for testing
-  req.on("error", function(err){
-    console.log(err);
-  });
+  request.makeRequest(domain, port, "/mbr/submit_insurance_quote", "POST", body);
 }
 
 //send log info to logger
