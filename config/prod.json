@@ -2,29 +2,35 @@
     "hostnames": {
         "mun": {
             "domain": "localhost",
-            "port": "3500"
+            "port": "3500",
+            "securePort": "3501"
         },
         "re": {
             "domain": "localhost",
-            "port": "3550"
+            "port": "3550",
+            "securePort": "3551"
         },
         "insinc": {
             "domain": "localhost",
-            "port": "53045"
+            "port": "53045",
+            "securePort": "53045"
         },
         "emp": {
             "domain": "localhost",
             "port": "1337",
+            "securePort": "1338",
             "accessTokenName": "CSCI4145_EMP_ACCESS_TOKEN",
             "mongoDbUrl": "mongodb://broderick:5m3nve0bj2@ds121980.mlab.com:21980/emp-db-csci4145-proj"
         },
         "log": {
             "domain": "localhost",
-            "port": "3000"
+            "port": "3000",
+            "securePort": "3001"
         },
         "mbr": {
             "domain": "localhost",
-            "port": "3100"
+            "port": "3100",
+            "securePort": "3100"
         }
     }
 }
