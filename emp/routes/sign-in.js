@@ -2,7 +2,6 @@
   'use strict';
 
   const requestEmpAuth = require('../shared/requestEmpAuth.js');
-  const makeRequest = require('../../common/request.js').makeRequest;
   const production = process.env.NODE_ENV === 'production';
   const config = production ?
       require('../../config/production.json').hostnames.emp
@@ -52,17 +51,6 @@
       required: true
     }
   ];
-
-  function requestEmpAuthorization(host, employeeId, password) {
-    const port = config.port;
-    const path = '/auth';
-    const method = 'post';
-    const body = { employeeId, password };
-    const headers = {
-      'Host': host
-    };
-    return makeRequest(null, port, path, method, body, headers);
-  }
 
   function setAccessCookie(token, res, secure) {
     res.cookie(config.accessTokenName, token, {

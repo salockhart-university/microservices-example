@@ -9,6 +9,7 @@
   const path = require('path');
   const http = require('http');
   const dbConn = require('./shared/dbConn.js');
+  const log = require('../common/common.js').logInfo;
 
   const app = express();
 
@@ -70,13 +71,10 @@
     const routes = path.join(__dirname, 'routes');
     const secureRoutes = path.join(__dirname, 'secure-routes');
 
-    fs.readdirSync(routes)
-        .map(file => path.join(routes, file)).forEach(loadRoute);
-
-    app.use(secureRouteBarrier);
-
-    fs.readdirSync(secureRoutes)
-        .map(file => path.join(secureRoutes, file)).forEach(loadRoute);
+    loadOpenRoutes();
+    injectAuthBarrier(app);
+    loadSecureRoutes();
+    configureLogger(app);
 
     function loadRoute(route) {
       let ext = path.extname(route);
@@ -92,13 +90,37 @@
       }
     }
 
-    function secureRouteBarrier(req, res, next) {
-      if (req.signedInUser) {
-        next();
-      }
-      else {
-        res.redirect('/sign-in');
-      }
+    function loadOpenRoutes() {
+      fs.readdirSync(routes)
+          .map(file => path.join(routes, file)).forEach(loadRoute);
+    }
+
+    function injectAuthBarrier(app) {
+      app.use(function (req, res, next) {
+        if (req.signedInUser) {
+          next();
+        }
+        else {
+          res.redirect('/sign-in');
+        }
+      });
+    }
+
+    function loadSecureRoutes() {
+      fs.readdirSync(secureRoutes)
+          .map(file => path.join(secureRoutes, file)).forEach(loadRoute);
+    }
+
+    function configureLogger(app) {
+      app.use(function (req, res, next) {
+        log('emp', req.originalUrl, req, res.statusCode, res.body)
+          .then(() => next())
+          .catch(function (err) {
+            console.log(`Warning: failed to log request from ${ req.url }`);
+            console.log(err);
+            next();
+          });
+      });
     }
   }
 })();
