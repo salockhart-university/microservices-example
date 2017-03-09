@@ -7,19 +7,19 @@
 
   const express = require('express');
   const path = require('path');
-  const http = require('http');
   const dbConn = require('./shared/dbConn.js');
   const log = require('../common/common.js').logInfo;
+  const startService = require('../common/startService.js');
 
   const app = express();
 
   setupMiddleware(app);
   setAppSecret(app);
-  injectAuthoirzationTokenParser(app);
+  injectAuthTokenParser(app);
   setViewPath(app);
   loadRoutes(app, dbConn);
 
-  http.createServer(app).listen(config.port);
+  startService(app, 'emp');
 
   /* Utility methods */
 
@@ -41,7 +41,7 @@
     app.set('secret', appSecret);
   }
 
-  function injectAuthoirzationTokenParser(app) {
+  function injectAuthTokenParser(app) {
     const jwt = require('jsonwebtoken');
 
     app.use(function (req, res, next) {
