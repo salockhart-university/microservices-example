@@ -15,8 +15,8 @@
     const sslCredentials = getSslCredentials();
     if (sslCredentials) {
       const securePort = parseInt(config[type].securePort);
+      setupSecureRedirect(app);
       https.createServer(sslCredentials, app).listen(securePort);
-
     }
     const port = parseInt(config[type].port);
     http.createServer(app).listen(port);
@@ -50,10 +50,7 @@
       key: readCredential(key)
     };
 
-    return credentials.ca
-        && credentials.cert
-        && credentials.key
-        && credentials;
+    return credentials.ca && credentials.cert && credentials.key && credentials;
 
     function readCredential(path) {
       try {
