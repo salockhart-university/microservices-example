@@ -119,7 +119,7 @@ app.post('/mbr/submit_employer_info', function(request, response) {
 		return logAndRespond(request, response, "/mbr/submit_employer_info", 400, "Bad Request, missing body parameter(s): " + JSON.stringify(missing));
 	} else {
 		collection.updateOne(
-			{ 'mortID' : request.body.mlsID, 'name': request.body.name },
+			{ 'mortID' : request.body.mortID, 'name': request.body.name },
 			{ $set: { 'employer_info' : {
 				'salary' : request.body.salary,
 				'employment_start' : request.body.employment_start,
