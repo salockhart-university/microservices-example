@@ -1,0 +1,13 @@
+<html>
+  <body>
+    <% if (locals.error) { %>
+      <h1>Error</h1>
+      <p>The transfer failed with the following error: </p>
+      <ul><li><%= error %></li></ul>
+    <% } else { %>
+      <h1>Success</h1>
+      <p>Your information has been successfully forwarded to MBR.</p>
+    <% } %>
+    <%- include('partials/nav-button', { action: 'transfer-information', buttonText: 'Back' })%>
+  </body>
+</html>
