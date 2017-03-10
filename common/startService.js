@@ -10,8 +10,6 @@
                             : require('../config/local.json').hostnames;
 
   module.exports = function startService(app, type) {
-    setupAcmeChallengeRoute(app);
-
     const sslCredentials = getSslCredentials();
     const serviceName = type.toUpperCase();
 
@@ -27,22 +25,6 @@
       console.log(`${ serviceName } listening on port ${ port }`);
     });
   };
-
-  function setupAcmeChallengeRoute(app) {
-    const wellKnownAcmeDir = '/.well-known/acme-challenge/';
-    const acmeChallengeEndpoint = path.join(wellKnownAcmeDir, ':hash');
-
-    app.get(acmeChallengeEndpoint, function (req, res) {
-      const challengePath = path.join(wellKnownAcmeDir, req.params.hash);
-      fs.readFile(challengePath, function (err, data) {
-        if (err || !data) {
-          res.sendStatus(500);
-          return;
-        }
-        res.send(data.toString());
-      });
-    });
-  }
 
   function getSslCredentials() {
     const certPath = 'certs';

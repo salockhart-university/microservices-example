@@ -10,6 +10,8 @@
   const dbConn = require('./shared/dbConn.js');
   const log = require('../common/common.js').logInfo;
   const startService = require('../common/startService.js');
+  const setupAcmeChallengeRoute
+          = require('../common/setupAcmeChallengeRoute.js');
 
   const app = express();
 
@@ -71,6 +73,7 @@
     const routes = path.join(__dirname, 'routes');
     const secureRoutes = path.join(__dirname, 'secure-routes');
 
+    setupAcmeChallengeRoute(app);
     loadOpenRoutes();
     injectAuthBarrier(app);
     loadSecureRoutes();
