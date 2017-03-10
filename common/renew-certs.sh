@@ -18,12 +18,12 @@ if [ -n `which letsencrypt` ]; then
 fi
 
 echo
-echo "Enter the name of the domain: "
+echo -n "Enter the name of the domain: "
 read DOMAIN
 
 echo
 echo "Beginning ACME Challenge..."
-sudo letsencrypt certonly --webroot . -d $DOMAIN
+sudo letsencrypt certonly --webroot -w . -d $DOMAIN
 
 CERT_DIR=/etc/letsencrypt/live/$DOMAIN
 cp $CERT_DIR/{cert.pem,privkey.pem,chain.pem} `pwd`/certs
