@@ -5,8 +5,8 @@
   const fs = require('fs');
 
   module.exports = function setupAcmeChallengeRoute(app) {
-    const wellKnownAcmeDir = '/.well-known/acme-challenge/';
-    const acmeChallengeEndpoint = path.join(wellKnownAcmeDir, ':hash');
+    const wellKnownAcmeDir = path.join('.well-known', 'acme-challenge');
+    const acmeChallengeEndpoint = `/${ wellKnownAcmeDir }/:hash`;
 
     app.get(acmeChallengeEndpoint, function (req, res) {
       const challengePath = path.join(wellKnownAcmeDir, req.params.hash);
