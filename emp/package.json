@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/salockhart/CSCI-4145-Project---Team-4#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "bluebird": "^3.5.0",
     "mongodb": "^2.2.24"
   },

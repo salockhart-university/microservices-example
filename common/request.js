@@ -31,7 +31,9 @@ module.exports = {
                     }
 				});
 			});
-
+      request.on('error', function (error) {
+        reject(error);
+      });
 			request.write(JSON.stringify(body));
 			request.end();
 		});
