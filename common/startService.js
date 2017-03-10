@@ -13,21 +13,27 @@
     setupAcmeChallengeRoute(app);
 
     const sslCredentials = getSslCredentials();
+    const serviceName = type.toUpperCase();
+
     if (sslCredentials) {
       const securePort = parseInt(config[type].securePort);
       setupSecureRedirect(app);
-      https.createServer(sslCredentials, app).listen(securePort);
+      https.createServer(sslCredentials, app).listen(securePort, function () {
+        console.log(`${ serviceName } listening on SSL port ${ securePort }`);
+      });
     }
     const port = parseInt(config[type].port);
-    http.createServer(app).listen(port);
+    http.createServer(app).listen(port, function () {
+      console.log(`${ serviceName } listening on port ${ port }`);
+    });
   };
 
   function setupAcmeChallengeRoute(app) {
-    const wellknownAcmeDir = '/.well-known/acme-challenge/';
-    const acmeChallengeEndpoint = path.join(wellknownAcmeDir, ':hash');
+    const wellKnownAcmeDir = '/.well-known/acme-challenge/';
+    const acmeChallengeEndpoint = path.join(wellKnownAcmeDir, ':hash');
 
     app.get(acmeChallengeEndpoint, function (req, res) {
-      const challengePath = path.join(wellknownAcmeDir, req.params.hash);
+      const challengePath = path.join(wellKnownAcmeDir, req.params.hash);
       fs.readFile(challengePath, function (err, data) {
         if (err || !data) {
           res.sendStatus(500);

@@ -1,23 +1,18 @@
 (function () {
   'use strict';
 
-  const production = process.env.NODE_ENV === 'production';
-  const config = production ?
-        require('../../config/production.json').hostnames.emp
-      : require('../../config/local.json').hostnames.emp;
-
   const Promise = require('bluebird');
   const MongoClient = require('mongodb').MongoClient;
-  const mongoDbUrl = config.mongoDbUrl;
+  const mongoDbUrl = process.env.EMP_DB_URL;
   const dbConn = MongoClient.connect(mongoDbUrl, {
       promiseLibrary: Promise
     })
     .then(function (db) {
-      console.log(`Connected to MongoDB backend at ${ mongoDbUrl }`);
+      console.log(`EMP connected to database`);
       return db.collection('employees');
     })
     .catch(function () {
-      console.log(`Failed to connect to MongoDB backend at ${ mongoDbUrl }`);
+      console.log(`EMP failed to connect to database`);
       console.log('Exiting...');
       process.exit(1);
     });
