@@ -4,8 +4,8 @@
   "description": "The Employer microservice for the project",
   "main": "app.js",
   "scripts": {
-    "dev": "NODE_ENV=emp nodemon app.js",
-    "start": "NODE_ENV=production node app.js",
+    "dev": "NODE_ENV=local nodemon app.js",
+    "start": "NODE_ENV=production node app.js"
   },
   "repository": {
     "type": "git",
