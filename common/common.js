@@ -1,10 +1,13 @@
 var http = require('http');
 
 let config;
+let port;
 
 if (process.env.NODE_ENV === "local") {
+  port = config.hostnames.log.port;
   config = require('../config/local.json');
 } else {
+  port = 80;
   config = require('../config/prod.json');
 }
 
@@ -21,7 +24,7 @@ module.exports = {
 
     var options = {
       host: config.hostnames.log.domain,
-      port: config.hostnames.log.port,
+      port: port,
       path: '/logger/log',
       method: 'POST',
       headers: {
