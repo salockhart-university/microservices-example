@@ -47,7 +47,7 @@
     const jwt = require('jsonwebtoken');
 
     app.use(function (req, res, next) {
-      const token = req.cookies[config.accessTokenName];
+      const token = req.cookies[config.emp.accessTokenName];
       if (token) {
         jwt.verify(token, app.get('secret'), function (err, decoded) {
           if (!err) {

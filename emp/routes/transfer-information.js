@@ -17,7 +17,7 @@
 
     app.post('/transfer-information', requireAuth, function (req, res) {
       const endpoint = '/mbr/submit_employer_info';
-      const { domain, port } = config.hostnames.mbr;
+      const { domain, port } = config.mbr;
       const body = makeRequestBody(req);
 
       makeRequest(domain, port, endpoint, 'POST', body)
