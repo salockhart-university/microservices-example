@@ -45,7 +45,7 @@ module.exports = {
 					body.push(chunk);
 				});
 				result.on('end', function() {
-					const result = Buffer.concat(body).toString();
+					const result = body.length === 0 ? '' : Buffer.concat(body).toString();
 					if (result.statusCode >= 400) {
 						return reject(result);
 					}
