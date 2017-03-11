@@ -20,14 +20,19 @@ module.exports = {
 		return new Promise(function(resolve, reject) {
 			const request = http.request(options, function(result) {
 				result.setEncoding('utf8');
+				const body = [];
 				result.on('data', function(chunk) {
+					body.push(chunk);
+				});
+				result.on('end', function() {
+					const result = Buffer.concat(body).toString();
 					if (result.statusCode >= 400) {
-						return reject(chunk);
+						return reject(result);
 					}
 					try {
-						resolve(JSON.parse(chunk));
+						resolve(JSON.parse(result));
 					} catch (err) {
-						resolve(chunk);
+						resolve(result);
 					}
 				});
 			});
