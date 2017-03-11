@@ -34,7 +34,7 @@ app.post("/insinc/realestate", function(req, res){
       req.body.mlsID == null||
       req.body.appraiseValue == null||
       req.body.name == null){
-    log(req, res, "/insinc/realestate", 400, "Bad Request");
+    return log(req, res, "/insinc/realestate", 400, "Bad Request");
   }
   else{
     reCollection.find({
@@ -61,7 +61,7 @@ app.post("/insinc/realestate", function(req, res){
       }
     });
 
-    log(req, res, "/insinc/realestate", 200, "OK");
+    return log(req, res, "/insinc/realestate", 200, "OK");
   }
 });
 
@@ -71,7 +71,7 @@ app.post("/insinc/municipal", function(req, res){
   if(req.body.mortID == null||
      req.body.mlsID == null||
      req.body.services == null){
-    log(req, res, "/insinc/municipal", 400, "Bad Request");
+    return log(req, res, "/insinc/municipal", 400, "Bad Request");
   }
   else{
     munCollection.find({
@@ -97,7 +97,7 @@ app.post("/insinc/municipal", function(req, res){
       }
     });
 
-    log(req, res, "/insinc/municipal", 200, "OK");
+    return log(req, res, "/insinc/municipal", 200, "OK");
   }
 });
 
