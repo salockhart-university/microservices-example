@@ -37,7 +37,11 @@ function makeInsuranceRequest(mlsID, mortID) {
 }
 
 function logAndRespond(request, response, endpoint, code, message) {
-	common.logInfo("MUN", endpoint, request, code, message);
+	common.logInfo("MUN", endpoint, request, code, message).then(function(result) {
+		console.log('Logging Request OK:', JSON.stringify(result, null, 5));
+	}).catch(function(err) {
+		console.log('Logging Request Error:', JSON.stringify(err, null, 5));
+	});
 	return response.status(code).send(message);
 }
 
