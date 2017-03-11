@@ -33,11 +33,15 @@ function makeInsuranceRequest(mlsID, mortID) {
 		domain,
 		port
 	} = config.hostnames.insinc;
-	request.makeRequest(domain, port, '/insinc/municipal', 'POST', body);
+	return request.makeRequest(domain, port, '/insinc/municipal', 'POST', body);
 }
 
 function logAndRespond(request, response, endpoint, code, message) {
-	common.logInfo("MUN", endpoint, request, code, message);
+	common.logInfo("MUN", endpoint, request, code, message).then(function(result) {
+		console.log('Logging Request OK:', JSON.stringify(result, null, 5));
+	}).catch(function(err) {
+		console.log('Logging Request Error:', JSON.stringify(err, null, 5));
+	});
 	return response.status(code).send(message);
 }
 
@@ -56,7 +60,11 @@ app.post('/mun/appraisal', function(req, res) {
 
 	logAndRespond(req, res, '/mun/appraisal', 200, 'OK');
 
-	makeInsuranceRequest(req.body.mlsID, req.body.mortID);
+	makeInsuranceRequest(req.body.mlsID, req.body.mortID).then(function(result) {
+		console.log('Insurance Request OK:', JSON.stringify(result, null, 5));
+	}).catch(function(err) {
+		console.log('Insurance Request Error:', JSON.stringify(err, null, 5));
+	});
 });
 
 app.listen(config.hostnames.mun.port, function() {

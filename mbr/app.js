@@ -84,7 +84,7 @@ app.post('/mbr/request_mortgage', function(request, response) {
 
 app.post('/mbr/submit_insurance_quote', function(request, response) {
 	var missing = [];
-	if (request.body.mlsID == undefined) { missing.push("mlsID"); }
+	if (request.body.mortID == undefined) { missing.push("mortID"); }
 	if (request.body.name == undefined) { missing.push("name"); }
 	if (request.body.insured_value == undefined) { missing.push("insured_value"); }
 	if (request.body.deductible_value == undefined) { missing.push("deductible_value"); }
@@ -92,7 +92,7 @@ app.post('/mbr/submit_insurance_quote', function(request, response) {
 		return logAndRespond(request, response, "/mbr/submit_insurance_quote", 400, "Bad Request, missing body parameter(s): " + JSON.stringify(missing));
 	} else {
 		collection.updateOne(
-			{ 'mlsID' : request.body.mlsID, 'name': request.body.name },
+			{ 'mortID' : request.body.mortID, 'name': request.body.name },
 			{ $set: { 'insurance_quote' : {
 				'insured_value' : request.body.insured_value,
 				'deductible_value' : request.body.deductible_value

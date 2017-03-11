@@ -43,11 +43,15 @@ function makeInsuranceRequest(mlsID, mortID, name) {
 		domain,
 		port
 	} = config.hostnames.insinc;
-	request.makeRequest(domain, port, '/insinc/realestate', 'POST', body);
+	return request.makeRequest(domain, port, '/insinc/realestate', 'POST', body);
 }
 
 function logAndRespond(request, response, endpoint, code, message) {
-	common.logInfo("RE", endpoint, request, code, message);
+	common.logInfo("RE", endpoint, request, code, message).then(function(result) {
+		console.log('Logging Request OK:', JSON.stringify(result, null, 5));
+	}).catch(function(err) {
+		console.log('Logging Request Error:', JSON.stringify(err, null, 5));
+	});
 	return response.status(code).send(message);
 }
 
@@ -66,9 +70,17 @@ app.post('/re/appraisal', function(req, res) {
 
 	logAndRespond(req, res, '/re/appraisal', 200, 'OK');
 
-	makeMunicipalRequest(req.body.mlsID, req.body.mortID);
+	makeMunicipalRequest(req.body.mlsID, req.body.mortID).then(function(result) {
+		console.log('Municiple Request OK:', JSON.stringify(result, null, 5));
+	}).catch(function(err) {
+		console.log('Municiple Request Error:', JSON.stringify(err, null, 5));
+	});
 
-	makeInsuranceRequest(req.body.mlsID, req.body.mortID, req.body.name);
+	makeInsuranceRequest(req.body.mlsID, req.body.mortID, req.body.name).then(function(result) {
+		console.log('Insurance Request OK:', JSON.stringify(result, null, 5));
+	}).catch(function(err) {
+		console.log('Insurance Request Error:', JSON.stringify(err, null, 5));
+	});
 });
 
 app.listen(config.hostnames.re.port, function() {
