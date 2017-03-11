@@ -27,7 +27,7 @@
             "securePort": "3001"
         },
         "mbr": {
-            "domain": "52.60.160.83",
+            "domain": "52.60.161.132",
             "port": "3100",
             "securePort": "3100"
         }
