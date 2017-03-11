@@ -10,7 +10,8 @@
                             : require('../config/local.json').hostnames;
 
   module.exports = function startService(app, type) {
-    const sslCredentials = getSslCredentials();
+    const serviceRootDir = path.join(path.dirname(__dirname), type);
+    const sslCredentials = getSslCredentials(serviceRootDir);
     const serviceName = type.toUpperCase();
 
     if (sslCredentials) {
@@ -26,11 +27,11 @@
     });
   };
 
-  function getSslCredentials() {
-    const certPath = 'certs';
-    const ca = path.join(__dirname, certPath, 'chain.pem');
-    const key = path.join(__dirname, certPath, 'privkey.pem');
-    const cert = path.join(__dirname, certPath, 'cert.pem');
+  function getSslCredentials(rootDir) {
+    const certDir = 'certs';
+    const ca = path.join(rootDir, certDir, 'chain.pem');
+    const key = path.join(rootDir, certDir, 'privkey.pem');
+    const cert = path.join(rootDir, certDir, 'cert.pem');
 
     const credentials = {
       ca: readCredential(ca),
