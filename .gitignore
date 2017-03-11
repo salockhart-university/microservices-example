@@ -44,3 +44,6 @@ stop.sh
 
 # IDE-specific files
 .jshintrc
+
+# SSL certificate directory
+certs/

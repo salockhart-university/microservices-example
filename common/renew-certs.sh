@@ -21,9 +21,12 @@ echo
 echo -n "Enter the name of the domain: "
 read DOMAIN
 
+mkdir -p `pwd`/.well-known/acme-challenge
+
 echo
 echo "Beginning ACME Challenge..."
 sudo letsencrypt certonly --webroot -w . -d $DOMAIN
 
 CERT_DIR=/etc/letsencrypt/live/$DOMAIN
+mkdir -p `pwd`/certs
 cp $CERT_DIR/{cert.pem,privkey.pem,chain.pem} `pwd`/certs
