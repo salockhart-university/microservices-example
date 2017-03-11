@@ -71,12 +71,9 @@
   function loadRoutes(app, dbConn) {
     const fs = require('fs');
     const routes = path.join(__dirname, 'routes');
-    const secureRoutes = path.join(__dirname, 'secure-routes');
 
     setupAcmeChallengeRoute(app);
-    loadOpenRoutes();
-    injectAuthBarrier(app);
-    loadSecureRoutes();
+    loadRoutes();
     configureLogger(app);
 
     function loadRoute(route) {
@@ -93,25 +90,9 @@
       }
     }
 
-    function loadOpenRoutes() {
+    function loadRoutes() {
       fs.readdirSync(routes)
           .map(file => path.join(routes, file)).forEach(loadRoute);
-    }
-
-    function injectAuthBarrier(app) {
-      app.use(function (req, res, next) {
-        if (req.signedInUser) {
-          next();
-        }
-        else {
-          res.redirect('/sign-in');
-        }
-      });
-    }
-
-    function loadSecureRoutes() {
-      fs.readdirSync(secureRoutes)
-          .map(file => path.join(secureRoutes, file)).forEach(loadRoute);
     }
 
     function configureLogger(app) {

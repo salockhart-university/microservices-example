@@ -2,10 +2,7 @@
   'use strict';
 
   const requestEmpAuth = require('../shared/requestEmpAuth.js');
-  const production = process.env.NODE_ENV === 'production';
-  const config = production ?
-      require('../../config/production.json').hostnames.emp
-    : require('../../config/local.json').hostnames.emp;
+  const setAccessCookie = require('../shared/setAccessCookie.js');
 
   module.exports = function createSignInRoute(app) {
     const signInLocals = {
@@ -52,11 +49,4 @@
     }
   ];
 
-  function setAccessCookie(token, res, secure) {
-    res.cookie(config.accessTokenName, token, {
-      httpOnly: true,
-      expires: new Date(Date.now() + token.expiresIn * 1000), // Millis
-      secure
-    });
-  }
 })();
