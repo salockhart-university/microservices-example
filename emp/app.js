@@ -9,6 +9,7 @@
   const path = require('path');
   const dbConn = require('./shared/dbConn.js');
   const log = require('../common/common.js').logInfo;
+  const setupSsl = require('../common/setupSsl.js');
   const startService = require('../common/startService.js');
   const setupAcmeChallengeRoute
           = require('../common/setupAcmeChallengeRoute.js');
@@ -17,6 +18,7 @@
 
   setupMiddleware(app);
   setAppSecret(app);
+  setupSsl(app, 'emp');
   injectAuthTokenParser(app);
   setViewPath(app);
   loadRoutes(app, dbConn);
