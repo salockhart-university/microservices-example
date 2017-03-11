@@ -1,9 +1,7 @@
 (function () {
   'use strict';
 
-  const production = process.env.NODE_ENV === 'production';
-  const config = production ? require('../config/production.json').hostnames.emp
-                            : require('../config/local.json').hostnames.emp;
+  const config = require('./shared/getConfig.js');
 
   const express = require('express');
   const path = require('path');

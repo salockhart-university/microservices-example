@@ -3,9 +3,7 @@
 
   const http = require('http');
   const https = require('https');
-  const production = process.env.NODE_ENV === 'production';
-  const config = production ? require('../config/production.json').hostnames
-                            : require('../config/local.json').hostnames;
+  const config = require('../config/prod.json').hostnames;
 
   module.exports = function startService(app, type) {
     const serviceName = type.toUpperCase();

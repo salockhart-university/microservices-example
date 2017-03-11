@@ -1,10 +1,7 @@
 (function () {
   'use strict';
 
-  const production = process.env.NODE_ENV === 'production';
-  const config = production ?
-      require('../../config/production.json').hostnames.emp
-    : require('../../config/local.json').hostnames.emp;
+  const config = require('./getConfig.js');
 
   module.exports = function setAccessCookie(token, res, secure) {
     res.cookie(config.accessTokenName, token, {

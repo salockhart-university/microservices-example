@@ -2,10 +2,7 @@
   'use strict';
 
   const makeRequest = require('../../common/request.js').makeRequest;
-  const production = process.env.NODE_ENV === 'production';
-  const config = production ?
-      require('../../config/production.json').hostnames.emp
-    : require('../../config/local.json').hostnames.emp;
+  const config = require('./getConfig.js');
 
   module.exports = function requestEmpAuthorization(host, employeeId, password) {
     const port  = config.port;

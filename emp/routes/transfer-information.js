@@ -3,10 +3,7 @@
 
   const makeRequest = require('../../common/request.js').makeRequest;
   const requireAuth = require('../shared/requireAuth.js');
-  const production = process.env.NODE_ENV === 'production';
-  const config = production ?
-      require('../../config/production.json')
-    : require('../../config/local.json');
+  const config = require('../shared/getConfig.js');
 
   module.exports = function createTransferInformationRoute(app) {
     app.get('/transfer-information', requireAuth, function (req, res) {
