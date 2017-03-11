@@ -41,6 +41,10 @@ function logAndRespond(request, response, endpoint, code, message) {
 	return response.status(code).send(message);
 }
 
+app.get('/', function(req, res) {
+	res.send('MUN Running');
+});
+
 app.post('/mun/appraisal', function(req, res) {
 	if (!req.body.mlsID) {
 		return logAndRespond(req, res, '/mun/appraisal', 400, 'Bad Request missing body parameter mlsID');
