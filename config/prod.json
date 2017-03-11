@@ -11,7 +11,7 @@
             "securePort": "3551"
         },
         "insinc": {
-            "domain": "localhost",
+            "domain": "35.167.231.16",
             "port": "53045",
             "securePort": "53045"
         },
