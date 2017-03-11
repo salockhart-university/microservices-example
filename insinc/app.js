@@ -57,7 +57,7 @@ app.post("/insinc/realestate", function(req, res){
     }).toArray(function(err, result){
       assert.equal(err, null);
       if(result.length > 0){
-        submitQuote(req.body.mlsID, req.body.name);
+        submitQuote(req.body.mortID, req.body.name);
       }
     });
 
@@ -93,7 +93,7 @@ app.post("/insinc/municipal", function(req, res){
     }).toArray(function(err, result){
       assert.equal(err, null);
       if(result.length > 0){
-        submitQuote(req.body.mlsID, result[0].name);
+        submitQuote(req.body.mortID, result[0].name);
       }
     });
 
@@ -102,9 +102,9 @@ app.post("/insinc/municipal", function(req, res){
 });
 
 //send quote to MBR
-function submitQuote(mlsID, name){
+function submitQuote(mortID, name){
   const body = {
-    mlsID,
+    mortID,
     insured_value : Math.floor(Math.random() * 100),
     deductible_value : Math.floor(Math.random() * 100),
     name
