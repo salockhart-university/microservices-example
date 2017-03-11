@@ -7,11 +7,14 @@ const uuidV4 = require('uuid/v4');
 var common = require('../common/common');
 
 let config;
+let port;
 
 if (process.env.NODE_ENV === "local") {
 	config = require('../config/local.json');
+	port = config.hostnames.mbr.port;
 } else {
 	config = require('../config/prod.json');
+	port = 80;
 }
 
 
@@ -138,6 +141,6 @@ app.post('/mbr/submit_employer_info', function(request, response) {
 	}
 });
 
-app.listen(config.hostnames.mbr.port, function() {
-  console.log('MBR listening on port ' + config.hostnames.mbr.port);
+app.listen(port, function() {
+  console.log('MBR listening on port ' + port);
 });
