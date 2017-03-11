@@ -1,12 +1,12 @@
 {
     "hostnames": {
         "mun": {
-            "domain": "localhost",
+            "domain": "104.196.161.63",
             "port": "3500",
             "securePort": "3501"
         },
         "re": {
-            "domain": "localhost",
+            "domain": "54.237.167.1",
             "port": "3550",
             "securePort": "3551"
         },
