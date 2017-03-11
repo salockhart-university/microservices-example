@@ -49,16 +49,16 @@
         return undefined;
       }
     }
+  }
 
-    function setupSecureRedirect(app) {
-      app.all('*', function redirectToSecureEndpoint(req, res, next) {
-        if (!req.secure) {
-          res.redirect('https://' + req.headers.host + req.url);
-        }
-        else {
-          next();
-        }
-      });
-    }
+  function setupSecureRedirect(app) {
+    app.all('*', function redirectToSecureEndpoint(req, res, next) {
+      if (!req.secure) {
+        res.redirect('https://' + req.headers.host + req.url);
+      }
+      else {
+        next();
+      }
+    });
   }
 })();
