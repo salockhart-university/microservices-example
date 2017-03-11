@@ -43,7 +43,7 @@ function makeInsuranceRequest(mlsID, mortID, name) {
 		domain,
 		port
 	} = config.hostnames.insinc;
-	request.makeRequest(domain, port, '/insinc/realestate', 'POST', body);
+	return request.makeRequest(domain, port, '/insinc/realestate', 'POST', body);
 }
 
 function logAndRespond(request, response, endpoint, code, message) {
