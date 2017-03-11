@@ -38,7 +38,7 @@ app.post("/logger/log", function(request, response) {
         'response body' : request.body.response_body
       }
     );
-		response.send(200);
+		response.sendStatus(200);
   } else {
 		console.log('bad log request');
 	  log.error({
