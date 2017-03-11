@@ -16,11 +16,10 @@
             "securePort": "53045"
         },
         "emp": {
-            "domain": "localhost",
+            "domain": "emp-csci4145-proj.tk",
             "port": "1337",
             "securePort": "1338",
-            "accessTokenName": "CSCI4145_EMP_ACCESS_TOKEN",
-            "mongoDbUrl": "mongodb://broderick:5m3nve0bj2@ds121980.mlab.com:21980/emp-db-csci4145-proj"
+            "accessTokenName": "CSCI4145_EMP_ACCESS_TOKEN"
         },
         "log": {
             "domain": "localhost",
