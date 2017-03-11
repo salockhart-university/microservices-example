@@ -147,7 +147,7 @@
                 else if (key == 'employer_info' || key == 'insurance_quote') {
                   $('#application-review-div').append('<div class="info-well-title">' + formattedKey + ': </div>');
                   $('#application-review-div').append('<div class="info-well info-well-' + key + '">');
-                  if (data[key].length == undefined || data[key].length == 0) {
+                  if (data[key] == undefined || JSON.stringify(data[key]) === JSON.stringify({})) {
                     $('#application-review-div .info-well-' + key).append('<p>No information on file</p>');
                   } else {
                     for (key2 in data[key]) {
