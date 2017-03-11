@@ -4,11 +4,11 @@ let config;
 let port;
 
 if (process.env.NODE_ENV === "local") {
-  port = config.hostnames.log.port;
   config = require('../config/local.json');
+  port = config.hostnames.log.port;
 } else {
-  port = 80;
   config = require('../config/prod.json');
+  port = 80;
 }
 
 module.exports = {
