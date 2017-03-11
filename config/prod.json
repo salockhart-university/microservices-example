@@ -22,12 +22,12 @@
             "accessTokenName": "CSCI4145_EMP_ACCESS_TOKEN"
         },
         "log": {
-            "domain": "localhost",
+            "domain": "104.196.182.137",
             "port": "3000",
             "securePort": "3001"
         },
         "mbr": {
-            "domain": "localhost",
+            "domain": "52.60.160.83",
             "port": "3100",
             "securePort": "3100"
         }
