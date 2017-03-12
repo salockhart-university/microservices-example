@@ -21,7 +21,7 @@
       const secure = req.secure;
       const { employeeId, password } = req.body;
 
-      requestEmpAuth(host, employeeId, password)
+      requestEmpAuth(host, employeeId, password, req.secure)
         .then(function (authRes) {
           if (authRes.success) {
             setAccessCookie(authRes.token, res, secure);

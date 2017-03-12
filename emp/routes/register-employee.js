@@ -8,10 +8,10 @@
     app.post('/register-employee', function (req, res) {
       const employeeInfo = req.body;
       const password = employeeInfo.password;
-      
+
       dbConn.registerEmployee(employeeInfo)
         .then(function (employeeInfo) {
-          requestEmpAuth(req.headers.host, employeeInfo.employeeId, password)
+          requestEmpAuth(req.headers.host, employeeInfo.employeeId, password, req.secure)
             .then(function (authRes) {
               setAccessCookie(authRes.token, res, req.secure);
               res.render('sign-up-success', { employeeInfo });
