@@ -3,6 +3,7 @@
 
   const requestEmpAuth = require('../shared/requestEmpAuth.js');
   const setAccessCookie = require('../shared/setAccessCookie.js');
+  const config = require('../shared/getConfig.js');
 
   module.exports = function createSignInRoute(app) {
     const signInLocals = {
@@ -17,7 +18,7 @@
     });
 
     app.post('/sign-in', function (req, res) {
-      const host = req.headers.host;
+      const host = config.emp.domain;
       const secure = req.secure;
       const { employeeId, password } = req.body;
 
