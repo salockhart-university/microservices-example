@@ -12,6 +12,7 @@
     const headers = {
       'Host': host
     };
+    host = process.env.NODE_ENV === 'local' ? null : host;
     return makeRequest(host, port, path, method, body, headers);
   };
 })();

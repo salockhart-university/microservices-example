@@ -21,7 +21,7 @@ module.exports = {
 		};
 
 		return new Promise(function(resolve, reject) {
-      const protocol = secure ? https : https;
+      const protocol = secure ? https : http;
 			const request = protocol.request(options, function(result) {
 				result.setEncoding('utf8');
 				let data = [];
