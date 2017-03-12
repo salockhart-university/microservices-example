@@ -56,11 +56,16 @@ app.post("/insinc/realestate", function(req, res) {
 		}).toArray(function(err, result) {
 			assert.equal(err, null);
 			if (result.length > 0) {
-				submitQuote(req.body.mortID, req.body.name);
+				submitQuote(req.body.mortID, req.body.name).then(function(result){
+					return log(req, res, "/insinc/realestate", 200, "OK");
+				}).catch(function(err){
+					return log(req, res, "/insinc/realestate", 400, "Bad Request");
+				});
+			}
+			else{
+				return log(req, res, "/insinc/realestate", 200, "OK");
 			}
 		});
-
-		return log(req, res, "/insinc/realestate", 200, "OK");
 	}
 });
 
@@ -91,11 +96,16 @@ app.post("/insinc/municipal", function(req, res) {
 		}).toArray(function(err, result) {
 			assert.equal(err, null);
 			if (result.length > 0) {
-				submitQuote(req.body.mortID, result[0].name);
+				submitQuote(req.body.mortID, result[0].name).then(function(result){
+					return log(req, res, "/insinc/municipal", 200, "OK");
+				}).catch(function(err){
+					return log(req, res, "/insinc/municipal", 400, "Bad Request");
+				});
 			}
-		});
-
-		return log(req, res, "/insinc/municipal", 200, "OK");
+			else{
+				return log(req, res, "/insinc/realestate", 200, "OK");
+			}
+		});		
 	}
 });
 
@@ -111,7 +121,8 @@ function submitQuote(mortID, name) {
 		domain,
 		port
 	} = config.hostnames.mbr;
-	request.makeRequest(domain, port, "/mbr/submit_insurance_quote", "POST", body);
+	
+	return request.makeRequest(domain, port, "/mbr/submit_insurance_quote", "POST", body);
 }
 
 //send log info to logger
