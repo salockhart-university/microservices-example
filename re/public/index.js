@@ -54,7 +54,8 @@ function registerApply() {
 		apply(data, function (success) {
 			console.log('Success!', success);
 			$('#re-apply-success').html(`
-				Success!
+				Success! Please visit your Mortgage Broker
+				to see the updated status.
 			`);
 		}, function (error) {
 			console.log('Error...', error);
