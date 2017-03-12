@@ -58,12 +58,10 @@ app.post('/mun/appraisal', function(req, res) {
 		return logAndRespond(req, res, '/re/appraisal', 400, 'Bad Request missing body parameter mortID');
 	}
 
-	logAndRespond(req, res, '/mun/appraisal', 200, 'OK');
-
 	makeInsuranceRequest(req.body.mlsID, req.body.mortID).then(function(result) {
-		console.log('Insurance Request OK:', JSON.stringify(result, null, 5));
+		logAndRespond(req, res, '/mun/appraisal', 200, 'OK');
 	}).catch(function(err) {
-		console.log('Insurance Request Error:', JSON.stringify(err, null, 5));
+		logAndRespond(req, res, '/mun/appraisal', 400, err);
 	});
 });
 

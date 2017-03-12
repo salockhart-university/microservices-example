@@ -68,18 +68,13 @@ app.post('/re/appraisal', function(req, res) {
 		return logAndRespond(req, res, '/re/appraisal', 400, 'Bad Request missing body parameter name');
 	}
 
-	logAndRespond(req, res, '/re/appraisal', 200, 'OK');
-
-	makeMunicipalRequest(req.body.mlsID, req.body.mortID).then(function(result) {
-		console.log('Municiple Request OK:', JSON.stringify(result, null, 5));
+	Promise.all([
+		makeMunicipalRequest(req.body.mlsID, req.body.mortID),
+		makeInsuranceRequest(req.body.mlsID, req.body.mortID, req.body.name)
+	]).then(function(result) {
+		logAndRespond(req, res, '/re/appraisal', 200, 'OK');
 	}).catch(function(err) {
-		console.log('Municiple Request Error:', JSON.stringify(err, null, 5));
-	});
-
-	makeInsuranceRequest(req.body.mlsID, req.body.mortID, req.body.name).then(function(result) {
-		console.log('Insurance Request OK:', JSON.stringify(result, null, 5));
-	}).catch(function(err) {
-		console.log('Insurance Request Error:', JSON.stringify(err, null, 5));
+		logAndRespond(req, res, '/re/appraisal', 400, err);
 	});
 });
 
