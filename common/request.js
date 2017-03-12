@@ -1,9 +1,10 @@
 'use strict';
 
 const http = require('http');
+const https = require('https');
 
 module.exports = {
-	makeRequest: function(host, port, path, method, body, headers) {
+	makeRequest: function(host, port, path, method, body, headers, secure) {
 		body = body || {};
 
 		// http://stackoverflow.com/questions/6158933/how-to-make-an-http-post-request-in-node-js
@@ -20,7 +21,8 @@ module.exports = {
 		};
 
 		return new Promise(function(resolve, reject) {
-			const request = http.request(options, function(result) {
+      const protocol = secure ? https : https;
+			const request = protocol.request(options, function(result) {
 				result.setEncoding('utf8');
 				let data = [];
 				result.on('data', function(chunk) {
