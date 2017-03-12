@@ -12,6 +12,10 @@
     const headers = {
       'Host': host
     };
+<<<<<<< HEAD
     return makeRequest(null, port, path, method, body, headers, secure);
+=======
+    return makeRequest(host, port, path, method, body, headers);
+>>>>>>> 3c64b94b6b4e18d3d33880b5a4209cd5647563ac
   };
 })();

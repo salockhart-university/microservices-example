@@ -54,11 +54,14 @@ function registerApply() {
 		apply(data, function (success) {
 			console.log('Success!', success);
 			$('#re-apply-success').html(`
-				Success! Please visit your Mortgage Broker
-				to see the updated status.
+				Success! Please visit your Mortgage Broker to see the updated status.
 			`);
 		}, function (error) {
-			console.log('Error...', error);
+			console.log('Error:', error);
+			handleWarnings($('#re-apply-form'), ['mortID', 'name'])
+			$('#re-apply-success').html(`
+				Error! No mortgage found with that mortID and name.
+			`);
 		})
 	});
 }
