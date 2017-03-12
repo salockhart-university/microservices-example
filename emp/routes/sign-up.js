@@ -14,14 +14,8 @@
   const signUpForm = [
     {
       type: 'text',
-      name: 'firstName',
-      label: 'First Name',
-      required: true
-    },
-    {
-      type: 'text',
-      name: 'lastName',
-      label: 'Last Name',
+      name: 'name',
+      label: 'Name',
       required: true
     },
     {

@@ -29,11 +29,8 @@
         });
 
       function makeRequestBody(req) {
-        const firstName = req.signedInUser.firstName;
-        const lastName = req.signedInUser.lastName;
-
+        const name = req.signedInUser.name;
         const mortID = req.body.mortId;
-        const name = [ firstName, lastName ].join(' ');
         const salary = req.signedInUser.salary;
         const employment_start = req.signedInUser.startDate;
 
