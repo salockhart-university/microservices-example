@@ -10,7 +10,7 @@ module.exports = {
 		// http://stackoverflow.com/questions/6158933/how-to-make-an-http-post-request-in-node-js
 		const options = {
 			host,
-			port: process.env.NODE_ENV === "local" ? port : 80,
+			port: process.env.NODE_ENV === "local" ? port : (secure ? 443 : 80),
 			path,
 			method,
 			headers: Object.assign({}, headers, {
