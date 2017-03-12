@@ -4,6 +4,8 @@ const http = require('http');
 
 module.exports = {
 	makeRequest: function(host, port, path, method, body, headers) {
+		body = body || {};
+
 		// http://stackoverflow.com/questions/6158933/how-to-make-an-http-post-request-in-node-js
 		const options = {
 			host,
@@ -20,19 +22,19 @@ module.exports = {
 		return new Promise(function(resolve, reject) {
 			const request = http.request(options, function(result) {
 				result.setEncoding('utf8');
-				const body = [];
+				let data = [];
 				result.on('data', function(chunk) {
-					body.push(chunk);
+					data.push(chunk);
 				});
 				result.on('end', function() {
-					const result = Buffer.concat(body).toString();
+					data = "".concat.apply(data);
 					if (result.statusCode >= 400) {
-						return reject(result);
+						return reject(data);
 					}
 					try {
-						resolve(JSON.parse(result));
+						resolve(JSON.parse(data));
 					} catch (err) {
-						resolve(result);
+						resolve(data);
 					}
 				});
 			});
