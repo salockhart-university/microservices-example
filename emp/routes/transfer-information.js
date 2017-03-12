@@ -20,7 +20,7 @@
       const { domain, port } = config.mbr;
       const body = makeRequestBody(req);
 
-      makeRequest(domain, port, endpoint, 'POST', body)
+      makeRequest(domain, port, endpoint, 'POST', body, req.secure)
         .then(function () {
           res.render('transfer-information-result');
         })

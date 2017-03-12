@@ -4,7 +4,7 @@
   const makeRequest = require('../../common/request.js').makeRequest;
   const config = require('./getConfig.js');
 
-  module.exports = function requestEmpAuthorization(host, employeeId, password) {
+  module.exports = function requestEmpAuthorization(host, employeeId, password, secure) {
     const port  = config.emp.port;
     const path = '/auth';
     const method = 'post';
@@ -12,6 +12,7 @@
     const headers = {
       'Host': host
     };
-    return makeRequest(host, port, path, method, body, headers);
+    host = process.env.NODE_ENV === 'local' ? null : host;
+    return makeRequest(host, port, path, method, body, headers, secure);
   };
 })();
