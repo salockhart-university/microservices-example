@@ -13,11 +13,12 @@
       errorMessage: null
     };
 
-    app.get('/sign-in', function (req, res) {
+    app.get('/sign-in', function (req, res, next) {
       res.render('sign-in', signInLocals);
+      next();
     });
 
-    app.post('/sign-in', function (req, res) {
+    app.post('/sign-in', function (req, res, next) {
       const host = config.emp.domain;
       const secure = req.secure;
       const { employeeId, password } = req.body;
@@ -31,6 +32,9 @@
           else {
             res.render('sign-in', signInLocals);
           }
+      })
+      .finally(function () {
+        next();
       });
     });
   };

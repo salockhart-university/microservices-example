@@ -6,16 +6,17 @@
   const config = require('../shared/getConfig.js');
 
   module.exports = function createTransferInformationRoute(app) {
-    app.get('/transfer-information', requireAuth, function (req, res) {
+    app.get('/transfer-information', requireAuth, function (req, res, next) {
       res.render('transfer-information', {
         action: '/transfer-information',
         form: transferInformationForm,
         buttonText: 'Send information to MBR',
         signedInUser: req.signedInUser
       });
+      next();
     });
 
-    app.post('/transfer-information', requireAuth, function (req, res) {
+    app.post('/transfer-information', requireAuth, function (req, res, next) {
       const endpoint = '/mbr/submit_employer_info';
       const { domain, port } = config.mbr;
       const body = makeRequestBody(req);
@@ -26,6 +27,9 @@
         })
         .catch(function (error) {
           res.render('transfer-information-result', { error });
+        })
+        .finally(function () {
+          next();
         });
 
       function makeRequestBody(req) {

@@ -8,6 +8,7 @@
         form: signUpForm,
         buttonText: 'Register'
       });
+      next();
     });
   };
 

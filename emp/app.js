@@ -97,7 +97,10 @@
 
     function configureLogger(app) {
       app.use(function (req, res, next) {
-        log('emp', req.originalUrl, req, res.statusCode, res.body)
+        console.log(req.originalUrl);
+        console.log(res.statusCode);
+        console.log(res.body);
+        log('emp', req.originalUrl, req, res.statusCode, res.body || {})
           .then(() => next())
           .catch(function (err) {
             console.log(`Warning: failed to log request from ${ req.url }`);

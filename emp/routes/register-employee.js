@@ -2,7 +2,7 @@
   'use strict';
 
   module.exports = function createRegisterEmployeeRoute(app, dbConn) {
-    app.post('/register-employee', function (req, res) {
+    app.post('/register-employee', function (req, res, next) {
       const employeeInfo = req.body;
 
       dbConn.registerEmployee(employeeInfo)
@@ -11,6 +11,9 @@
         })
         .catch(function () {
           res.render('sign-up-fail');
+        })
+        .finally(function () {
+          next();
         });
     });
   };

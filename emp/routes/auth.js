@@ -2,7 +2,7 @@
   'use strict';
 
   module.exports = function createAuthRoute(app, dbConn) {
-    app.post('/auth', function (req, res) {
+    app.post('/auth', function (req, res, next) {
       const { employeeId, password } = req.body;
 
       dbConn.fetchEmployee(employeeId)
@@ -28,6 +28,9 @@
         })
         .catch(function () {
            res.json({ success: false });
+        })
+        .finally(function () {
+          next();
         });
     });
   };
