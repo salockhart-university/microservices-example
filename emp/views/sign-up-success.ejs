@@ -1,7 +1,7 @@
 <html>
   <body>
     <h1>Sign Up Success</h1>
-    <p>Welcome, <%= employeeInfo.firstName %>!</p>
+    <p>Welcome, <%= employeeInfo.name %>!</p>
     <p>Your employeeId is <b><%= employeeInfo.employeeId %><b></p>
     <%- include('partials/nav-button.ejs', { action: '/sign-in', buttonText: 'Sign In' })%>
   </body>
