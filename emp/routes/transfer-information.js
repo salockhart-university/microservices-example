@@ -24,11 +24,10 @@
       makeRequest(domain, port, endpoint, 'POST', body, req.secure)
         .then(function () {
           res.render('transfer-information-result');
+          next();
         })
         .catch(function (error) {
           res.render('transfer-information-result', { error });
-        })
-        .finally(function () {
           next();
         });
 

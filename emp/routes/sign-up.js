@@ -2,7 +2,7 @@
   'use strict';
 
   module.exports = function (app) {
-    app.get('/sign-up', function (req, res) {
+    app.get('/sign-up', function (req, res, next) {
       res.render('sign-up', {
         action: '/register-employee',
         form: signUpForm,

@@ -32,8 +32,9 @@
           else {
             res.render('sign-in', signInLocals);
           }
+          next();
       })
-      .finally(function () {
+      .catch(function () {
         next();
       });
     });
